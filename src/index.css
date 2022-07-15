@@ -1,0 +1,19 @@
+:root {
+  --colors-grayscale-00: #004040;
+}
+* {
+  margin: 0;
+  padding: 0;
+  color: var(--colors-grayscale-00);
+  box-sizing: border-box;
+}
+
+div, p, span, a, rt, rp, dfn, abbr, q, cite, em, time, var,
+samp, i, b, sub, sup, small, strong, mark, ruby, ins, del,
+bdi, bdo, s, kbd, wbr {
+  font-family: Tahoma,Verdana,Segoe,sans-serif; 
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: Tahoma,Verdana,Segoe,sans-serif;
+}
