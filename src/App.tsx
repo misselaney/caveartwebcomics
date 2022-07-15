@@ -2,7 +2,6 @@ import React, { Component, useState } from 'react'
 import { Route, Routes, Navigate, Outlet } from 'react-router-dom'
 import Authenticate from './pages/Authenticate'
 import { Home } from './pages/Home'
-import Lists from './pages/Lists'
 import NotFound from './pages/NotFound'
 import axios from 'axios'
 import '@marissaconner/sousanne-component-library/index.css'
@@ -74,18 +73,6 @@ function App() {
         <Route
           path="/home"
           element={<Home onLogOut={logOut} />}
-        >
-        </Route>
-        :
-        ''
-      }
-      { auth.loggedIn ?
-        <Route
-          path="/lists"
-          element={<>
-            <Lists />
-          </>
-          }
         >
         </Route>
         :

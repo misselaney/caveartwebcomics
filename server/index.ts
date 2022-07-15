@@ -5,9 +5,7 @@ import path from 'path'
 import cors from 'cors'
 import { Pool } from 'pg'
 import userRoutes from './api/user'
-import listRoutes from './api/list'
 
-const port = process.env.PORT || 5000
 const router = Express.Router()
 const pgConfig = {
   max: 20,
@@ -39,7 +37,6 @@ app
   })
 )
 app.use('/api/user', userRoutes)
-app.use('/api/list', listRoutes)
 
 app.use(Express.static(path.join(__dirname, '/../build')))
 
@@ -48,7 +45,7 @@ app.get('*', function (req: Express.Request, res: Express.Response) {
   res.sendFile(path.join(__dirname+'/../public/index.html'))
 })
 
-app.listen(port)
+app.listen(pgConfig.port)
 
-console.log('App is listening on port ' + port)
+console.log('App is listening on port ' + pgConfig.port)
 module.exports = app
