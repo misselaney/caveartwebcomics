@@ -2,6 +2,8 @@ import React, { Component, useState } from 'react'
 import { Route, Routes, Navigate, Outlet } from 'react-router-dom'
 import Authenticate from './pages/Authenticate'
 import { Home } from './pages/Home'
+import ManageComics from './pages/ManageComics'
+import NewComic from './pages/NewComic'
 import NotFound from './pages/NotFound'
 import axios from 'axios'
 import '@marissaconner/sousanne-component-library/index.css'
@@ -66,21 +68,29 @@ function App() {
   return (
     <Routes>
       <Route
-        path="/login"
+        path="login"
         element={<Authenticate onLogIn={logIn} />}
       />
       { auth.loggedIn ?
         <Route
-          path="/home"
+          path="home"
           element={<Home onLogOut={logOut} />}
         >
         </Route>
         :
         ''
       }
+      { auth.loggedIn ?
+        <Route path="manage">
+          <Route path="comics" element={<ManageComics />} />
+          <Route path="new" element={<NewComic />} />
+        </Route>
+        :
+        ''
+      }
       <Route
         path="*"
-        element={<Authenticate onLogIn={logIn} />}
+        element={<NotFound />}
       />
     </Routes>
   )

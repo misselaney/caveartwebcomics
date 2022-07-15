@@ -6,6 +6,7 @@ import cors from 'cors'
 import { Pool } from 'pg'
 import userRoutes from './api/user'
 
+const port = process.env.PORT || 5000
 const router = Express.Router()
 const pgConfig = {
   max: 20,
@@ -45,7 +46,7 @@ app.get('*', function (req: Express.Request, res: Express.Response) {
   res.sendFile(path.join(__dirname+'/../public/index.html'))
 })
 
-app.listen(pgConfig.port)
+app.listen(port)
 
-console.log('App is listening on port ' + pgConfig.port)
+console.log('App is listening on port ' + port)
 module.exports = app

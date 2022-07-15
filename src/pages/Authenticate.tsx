@@ -55,7 +55,7 @@ export const Authenticate = (props: AuthProps) => {
       data: { email, password }
     })
       .then((response) => {
-        console.log(response)
+        setConfirmSignup(true)
       })
       .catch((err) => {
         console.error(err)
@@ -69,6 +69,7 @@ export const Authenticate = (props: AuthProps) => {
   const [validPassword, setValidPassword] = useState<boolean>(false)
   const [emailError, setEmailError] = useState<string>("")
   const [loggedIn, setLoggedIn] = useState<boolean>(false)
+  const [confirmSignup, setConfirmSignup] = useState<boolean>(false)
 
   const emailStatus = function () {
     if (!validEmail) {
@@ -97,12 +98,17 @@ export const Authenticate = (props: AuthProps) => {
             onChange={(e) => {onInputPassword(e)}}
           />
         </fieldset>
-        <Button
-          type="button"
-          onClick={signUp}
-        >
-          Sign Up
-        </Button>
+        {
+          !confirmSignup ? 
+            <Button
+              type="button"
+              onClick={signUp}
+            >
+              Sign Up
+            </Button>
+            :
+            <span>You&rsquo;re signed up!</span>
+        }
         <Button
           type="button"
           onClick={logIn}
