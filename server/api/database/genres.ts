@@ -66,4 +66,4 @@ export const genre = {
   },
 }
 
-export default auth
+export default genre
