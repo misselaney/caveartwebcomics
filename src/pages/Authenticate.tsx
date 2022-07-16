@@ -37,9 +37,7 @@ export const Authenticate = (props: AuthProps) => {
       data: { email, password }
     })
       .then((res) => {
-        console.error('I done did it')
         setLoggedIn(true)
-        // res.data  {"sousanne":"...","sousanneId":20}
         props.onLogIn(res.data)
       })
       .catch((err) => {
