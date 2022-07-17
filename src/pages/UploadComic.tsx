@@ -24,7 +24,10 @@ function UploadComic() {
       axios({
         method: 'post',
         url: '/api/comic/upload',
-        data: formData
+        data: formData,
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
       })
         .then((res) => {
           console.log(res)
@@ -34,8 +37,6 @@ function UploadComic() {
           setError(true)
         })
     }
-
-   
   }
 
   return (

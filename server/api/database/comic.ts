@@ -80,7 +80,7 @@ export const comic = {
       })
     pool.release()
     return result
-  }
+  },
 }
 
 export default comic

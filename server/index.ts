@@ -8,6 +8,8 @@ import userRoutes from './api/user'
 import comicRoutes from './api/comic'
 import genreRoutes from './api/genre'
 
+
+
 const port = process.env.PORT || 5000
 const router = Express.Router()
 const pgConfig = {
