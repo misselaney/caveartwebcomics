@@ -30,6 +30,13 @@ function UploadComic() {
         <img className="upload__preview" id="upload_preview" src={src} alt="Preview" />
       </form>
 
+      <label htmlFor="upload_date">Release date</label>
+      <input type="date" id="upload_date" />
+
+      <label htmlFor="upload_time">Time of day</label>
+      <input type="time" id="upload_time" />
+
+
       <button type="button" onClick={() => {uploadFile()}}>Upload</button>
 
     </div>
