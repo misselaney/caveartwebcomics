@@ -27,19 +27,19 @@ userRoutes.post('/login', async (req: Request, res: Response) => {
     const userId = queryResult.id
     const sessionHash = createHash(createRandom())
     auth.updateUserSession(userId, sessionHash)
-    res.cookie('sousannesession', sessionHash)
-    res.cookie('sousanneuser', userId)
+    res.cookie('caveartwebcomicssession', sessionHash)
+    res.cookie('caveartwebcomicsuser', userId)
     const token = {
-      sousanne: sessionHash,
-      sousanneId: userId
+      caveartwebcomics: sessionHash,
+      caveartwebcomicsId: userId
     }
     res.status(200).send(token)
   }
 })
 
 userRoutes.post('/logout', async (req: Request, res: Response) => {
-  const id = req.cookies.sousanneuser
-  const session = req.cookies.sousannesession
+  const id = req.cookies.caveartwebcomicsuser
+  const session = req.cookies.caveartwebcomicssession
   const queryResult = await auth.clearUserSession(session, id)
   if (queryResult.error) {
     res.status(500).send(queryResult)
@@ -49,8 +49,8 @@ userRoutes.post('/logout', async (req: Request, res: Response) => {
 })
 
 userRoutes.get('/session', async (req: Request, res: Response) => {
-  const id = req.cookies.sousanneuser
-  const session = req.cookies.sousannesession
+  const id = req.cookies.caveartwebcomicsuser
+  const session = req.cookies.caveartwebcomicssession
   const queryResult = await auth.confirmUserSession(session, id)
   if (queryResult.error) {
     res.status(403).send(queryResult)

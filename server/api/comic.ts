@@ -7,7 +7,7 @@ const comicRoutes = Express.Router()
 
 comicRoutes.post('/new', async (req: Request, res: Response) => {
   const { name, string, selectedStyles, subdomain, description, selectedGenres, visibility } = req.body
-  const author = req.cookies.sousanneuser
+  const author = req.cookies.caveartwebcomicsuser
   const comicData = { name, string, subdomain, description, visibility, author } as IComic
   let queryResult = await comic.create(comicData)
   if (queryResult.error) {

@@ -1,7 +1,8 @@
 import { createContext, useContext } from 'react'
 
 interface AppContextInterface {
-  loggedIn: boolean
+  loggedIn: boolean,
+  userId?: number
 }
 
 export const AuthContext = createContext<AppContextInterface | null>(null)

@@ -12,7 +12,7 @@ axios.defaults.baseURL = 'http://localhost:5000'
 
 function App() {
   const existingTokens = localStorage.getItem('tokens')
-
+  
   const checkAuth = async function () {
     axios({
       method: 'get',
@@ -70,7 +70,7 @@ function App() {
       <div className="app__header">
         UNGA GRUNGA BUNGA
       </div>
-      <div className="app__body">
+      <div className="app_body">
         <Routes>
           <Route
             path="login"
