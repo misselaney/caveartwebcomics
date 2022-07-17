@@ -103,7 +103,7 @@ function NewComic() {
       })
   }
   
-  useEffect(() => {
+  useEffect(() => {    
     axios({
       method: 'get',
       url: '/api/genre'

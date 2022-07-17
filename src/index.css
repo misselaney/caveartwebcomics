@@ -1,10 +1,14 @@
 :root {
-  --colors-grayscale-00: #004040;
+  --col-grayscale-00: #004040;
+  --col-text-ancillary: #767676;
+  --col-interactive-01-border: #959595;
+  --border-radius: 4px;
 }
+
 * {
   margin: 0;
   padding: 0;
-  color: var(--colors-grayscale-00);
+  color: var(--col-grayscale-00);
   box-sizing: border-box;
 }
 
@@ -16,4 +20,181 @@ bdi, bdo, s, kbd, wbr {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: Tahoma,Verdana,Segoe,sans-serif;
+}
+
+.app {
+  background-color: var(--col-background-20);
+}
+
+.app__header {
+  background-color: var(--col-background-70);
+  color: var(--col-text-inverse);
+  padding:  var(--spacing-md);
+  text-align: center;
+}
+
+.app__body {
+  background-color: var(--col-background);
+  color: red;
+  max-width: 75rem;
+  margin: 0 auto;
+  padding:  var(--spacing-lg) var(--spacing-md);
+}
+
+.formfield {
+  margin-bottom: var(--spacing-xs);
+}
+
+.checkbox__control {
+  display: flex;
+  height: 0;
+  margin: 0;
+  opacity: 0;
+  padding: 0;
+  visibility: hidden;
+  width: 0;
+}
+
+
+fieldset {
+  border: none;
+  padding-bottom:  var(--spacing-md);
+}
+
+legend {
+  font-weight: 700;
+}
+
+.checkbox__control + label::before,
+.checkbox__control + label::after {
+  border: 2px solid transparent;
+  border-radius: 3px;
+  content: '';
+  display: inline-block;
+  left: calc(-1 * var(--spacing-md));
+  position: absolute;
+}
+
+.checkbox__control + label::before {
+  border: 2px solid var(--col-interactive-01-border);
+  width: var(--spacing-md);
+  height: var(--spacing-md);
+}
+
+.checkbox__control + label::after {
+  width: 0;
+  transform: rotate(-50deg);
+}
+
+.checkbox__control:checked + label::after {
+  border-color: var(--col-interactive-01-label);
+  border-top: 2px solid transparent;
+  border-right: 2px solid transparent;
+  height: var(--spacing-3xs);
+  margin-inline-start: var(--spacing-3xs);
+  margin-bottom:var(--spacing-3xs);
+  width: var(--spacing-sm);
+  transition: all 0.125s ease-out;
+}
+
+.checkbox__control:checked + label::before {
+  background-color: var(--col-interactive);
+  border-color: var(--col-interactive);
+}
+
+.checkbox__control:disabled + label {
+  cursor: not-allowed;
+}
+
+.checkbox__control:disabled + label::before {
+  border-color:  var(--col-disabled);
+}
+.checkbox__control:disabled:checked + label::before {
+  background-color: var(--col-disabled);
+}
+
+.checkbox__label {
+  font-weight: 400;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  margin: var(--spacing-3xs) var(--spacing-xs) var(--spacing-3xs) var(--spacing-md);
+  padding-left: var(--spacing-sm);
+  align-items: center;
+}
+
+.checkbox__label:active,
+.checkbox__label:focus {
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.checkbox__helptext {
+  color: var(--col-text-ancillary);
+  margin-inline-start: var(--spacing-md);
+  padding-left: var(--spacing-sm);
+  font-size: var(--font-size-sm);
+}
+
+.Error {
+  color: var(--col-error-70);
+  font-weight: 700;
+}
+
+
+/**
+ * Validation errors. If you write correct, accessible html, these styles will not be applied.
+ */
+input[id=undefined] + label::before {
+  border-color: red !important;
+}
+
+label.checkbox__label:not([for]) {
+  color: red !important;
+}
+
+.indent {
+  margin-inline-start: 2rem;
+  overflow: hidden;
+}
+.expanded {
+  max-height: 100vh;
+  height: auto;
+  overflow: hidden;
+  transition: max-height 0.5s ease-out;
+}
+.collapsed {
+  max-height: 0;
+  transition: all 0.5s ease-out;
+}
+
+.comiclist__entry {
+  padding: var(--spacing-md);
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  border: 2px solid var(--col-interactive-01-border);
+  border-radius: var(--border-radius);
+}
+
+.comiclist__details {
+  padding:  var(--spacing-sm);
+  display: flex;
+  flex-direction: column;
+}
+
+.comiclist__title {
+  font-weight: 700;
+}
+
+.comiclist__description {
+  color: var(--col-text-ancillary);
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  display: block; /* Fallback for non-webkit */
+  display: -webkit-box;
 }
