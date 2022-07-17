@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import ComicTag from '../components/ComicTag'
 import { Button, TextInput } from '@marissaconner/sousanne-component-library'
 import axios from 'axios'
 
@@ -133,33 +134,6 @@ function NewComic() {
 
   }, [])
 
-  const renderGenreSelection = function (genres: Genre[]) {
-    return (
-      genres.map((genre, idx) => {
-        const children = Object.values(genre.children)
-        return (
-          <div key={idx}>
-            <input
-              type="checkbox"
-              id={`genre-${genre.id}`}
-              name='genres'
-              value={genre.id}
-              onChange={() => {
-                const pick = { id: genre.id, name: genre.name }
-                toggleGenre(pick)
-              }}
-            >
-            </input>
-            <label htmlFor={`genre-${genre.id}`}>
-              {genre.name}
-            </label>
-            { selectedGenres[genre.id] ? renderGenreSelection(children as Genre[]) : ''}
-          </div>
-        )
-      })
-    )
-  }
-
   return (
     <div>
       <TextInput
@@ -177,27 +151,21 @@ function NewComic() {
 
       <fieldset>
         <legend>Style</legend>
-        {styles.map((style, idx) => {
-          return (
-            <div key={idx}>
-              <input
-                name="comicStyle"
-                type="checkbox"
-                id={`style-${idx}`}
-                onChange={() => {
-                  const pick = { id: style.id, name: style.name }
-                  toggleStyle(pick)
-                }}
-              />
-              <label htmlFor={`style-${idx}`}>{style.name}</label>
-            </div>
-          )
-        })}
+        <ComicTag
+          selection={selectedStyles}
+          options={styles}
+          toggleOption={toggleStyle}
+        />
       </fieldset>
 
       <fieldset>
         <legend>Genres</legend>
-        {renderGenreSelection(genres)}
+        <ComicTag
+          selection={selectedGenres}
+          options={genres}
+          toggleOption={toggleGenre}
+        />
+
       </fieldset>
 
       <label htmlFor="comic_description">Description</label>
