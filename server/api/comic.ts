@@ -8,7 +8,7 @@ import fs from 'fs'
 
 const comicRoutes = Express.Router()
 
-const extensions = ['.png', '.gif', '.jpg', 'jpeg']
+const extensions = ['.png', '.gif', '.jpg', '.jpeg']
 
 const fileStorage = multer.diskStorage({
   destination: function (req, file, callback) {
@@ -20,19 +20,19 @@ const fileStorage = multer.diskStorage({
   }
 })
 
-const uploads = multer({
+const upload = multer({
   storage: fileStorage,
   fileFilter: function(req, file, callback) {
     console.log('file filter is running')
     const ext = path.extname(file.originalname);
     console.log(file)
     if (!extensions.includes(ext)) {
-      console.log('Invalid file extenson')
+      callback(new Error('Invalid file extension.'))
       return
     }
     fs.exists(`./uploads/${file.originalname}`, function (exists) {
       if (exists) {
-       console.log('This image already exists.')
+       callback(new Error('This image already exists.'))
        return
       }
     })
@@ -79,9 +79,17 @@ comicRoutes.get('/author/:id', async (req: Request, res: Response) => {
   }
 })
 
-comicRoutes.post('/upload', uploads, async (req: Request, res: Response) => {
+comicRoutes.post('/upload', async (req: Request, res: Response) => {
+  upload(req, res, function(err) {
+    if (err) {
+      console.log("Error!")
+      console.log(err)
+      res.status(500).send()
+    }
+    res.status(200).send()
+  })
 
-  res.status(200).send()
+  
 })
 
 export default comicRoutes
