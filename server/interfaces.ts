@@ -1,8 +1,11 @@
 export interface IComic {
   name: string,
   description: string,
-  style: string,
   subdomain: string,
   visibility: string,
   author: number
+}
+
+export interface ITableNameIDPair {
+  [key:string]: string
 }

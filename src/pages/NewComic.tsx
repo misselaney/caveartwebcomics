@@ -11,6 +11,12 @@ interface Genre {
   parent_id: number
 }
 
+interface Style {
+  id: number,
+  name: string,
+  description: string
+}
+
 const defaultGenres = {
   children: [],
   description: '',
@@ -20,21 +26,23 @@ const defaultGenres = {
   parent_id: 0
 }
 
+const defaultStyles = { id: 0, name: 'Loading', description: '' }
+
 const defaultPicks = {}
 
 const visibilities = ['Public', 'Unlisted', 'Private']
 
-const styles = ["Illustration", "3D", "Sprites", "Photography"]
-
 function NewComic() {
   const [genres, setGenres] = useState<Genre[]>([defaultGenres])
+  const [styles, setStyles] = useState<Style[]>([defaultStyles])
   const [name, setName] = useState<string>('')
   const [subdomain, setSubdomain] = useState<string>('')
   const [description, setDescription] = useState<string>('')
-  const [style, setStyle] = useState<string>('')
   const [selectedGenres, setSelectedGenres] = useState<{[key: string]: string}>(defaultPicks)
+  const [selectedStyles, setSelectedStyles] = useState<{[key: string]: string}>(defaultPicks)
   const [visibility, setVisibility] = useState<string>('')
   const [submissionError, setSubmissionError] = useState<boolean>(false)
+
 
   const onNameChange = function (e: React.ChangeEvent<HTMLInputElement>) {
     setName(e.target.value)
@@ -59,8 +67,17 @@ function NewComic() {
     } else {
       newGenres[pick.id] = pick.name
     }
-    console.log(newGenres)
     setSelectedGenres(newGenres)
+  }
+
+  const toggleStyle = function (pick: {id: number, name: string}) {
+    const newStyles = {...selectedStyles}
+    if (newStyles[pick.id]) {
+      delete newStyles[pick.id]
+    } else {
+      newStyles[pick.id] = pick.name
+    }
+    setSelectedStyles(newStyles)
   }
 
   const submitComic = function () {
@@ -68,7 +85,7 @@ function NewComic() {
       name,
       subdomain,
       description,
-      style,
+      selectedStyles,
       selectedGenres,
       visibility
     }
@@ -91,7 +108,7 @@ function NewComic() {
       url: '/api/genre'
     })
       .then((res) => {
-        const data = Object.values(Object.values(res.data))
+        const data = Object.values(res.data)
         if (Array.isArray(data)) {
           setGenres(data as Genre[])
         }
@@ -99,6 +116,21 @@ function NewComic() {
       .catch((err) => {
         console.error(err)
       })
+
+    axios({
+      method: 'get',
+      url: '/api/comic/style'
+    })
+      .then((res) => {
+        const data = Object.values(res.data)
+        if (Array.isArray(data)) {
+          setStyles(data as Style[])
+        }
+      })
+      .catch((err) => {
+        console.error(err)
+      })
+
   }, [])
 
   const renderGenreSelection = function (genres: Genre[]) {
@@ -150,10 +182,14 @@ function NewComic() {
             <div key={idx}>
               <input
                 name="comicStyle"
-                type="radio"
+                type="checkbox"
                 id={`style-${idx}`}
+                onChange={() => {
+                  const pick = { id: style.id, name: style.name }
+                  toggleStyle(pick)
+                }}
               />
-              <label htmlFor={`style-${idx}`}>{style}</label>
+              <label htmlFor={`style-${idx}`}>{style.name}</label>
             </div>
           )
         })}

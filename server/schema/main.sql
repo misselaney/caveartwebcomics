@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS comics_to_genres (
 );
 CREATE TABLE IF NOT EXISTS comics_to_styles (
     id SERIAL PRIMARY KEY,
-    comic_id INT REFERENCES comics(id),
+    comic_id INT REFERENCES comics(id) ON DELETE CASCADE,
     style_id INT REFERENCES styles(id),
     UNIQUE (comic_id, style_id)
 );

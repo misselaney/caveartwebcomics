@@ -1,7 +1,6 @@
 import { db } from '../../index'
 import { QueryResult } from 'pg'
 
-
 const buildNestedChildren = function (id: number = 0) {
   return `WITH RECURSIVE tree AS (
       SELECT *, 0 as lvl
