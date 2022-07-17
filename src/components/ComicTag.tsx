@@ -29,19 +29,23 @@ export const ComicTag = (props: ComicTagProps) => {
           children = Object.values(option.children) as Option[]
         }
         return (
-          <div key={idx}>
+          <div key={idx} className="formfield checkbox">
             <input
+              tab-index="0"
               type="checkbox"
+              className="checkbox__control"
               id={`option-${identifier}`}
               value={option.id}
               checked={!!selection[option.id]}
               onChange={() => toggleOption({ id: option.id, name: option.name })}
             >
             </input>
-            <label htmlFor={`option-${identifier}`}>
+            <label className="checkbox__label" htmlFor={`option-${identifier}`}>
               {option.name}
             </label>
-            {selection[option.id] ? <ComicTag options={children} toggleOption={toggleOption} selection={selection} /> : ''}
+            <div className={selection[option.id] ? 'indent expanded' : 'indent collapsed'}>
+              <ComicTag options={children} toggleOption={toggleOption} selection={selection} />
+            </div>
           </div>
         )
       })}

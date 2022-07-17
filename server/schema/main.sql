@@ -24,6 +24,8 @@ CREATE TABLE IF NOT EXISTS comics (
     description TEXT,
     author INT references users(id),
     created_at TIMESTAMP DEFAULT NOW(),
+    unlisted BOOLEAN DEFAULT FALSE,
+    private BOOLEAN DEFAULT FALSE,
     UNIQUE (author, name)
 );
 CREATE TABLE IF NOT EXISTS chapters (

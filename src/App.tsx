@@ -66,33 +66,40 @@ function App() {
   // TODO later: https://www.robinwieruch.de/react-router-private-routes/
 
   return (
-    <Routes>
-      <Route
-        path="login"
-        element={<Authenticate onLogIn={logIn} />}
-      />
-      { auth.loggedIn ?
-        <Route
-          path="home"
-          element={<Home onLogOut={logOut} />}
-        >
-        </Route>
-        :
-        ''
-      }
-      { auth.loggedIn ?
-        <Route path="manage">
-          <Route path="comics" element={<ManageComics />} />
-          <Route path="new" element={<NewComic />} />
-        </Route>
-        :
-        ''
-      }
-      <Route
-        path="*"
-        element={<NotFound />}
-      />
-    </Routes>
+    <div className="app">
+      <div className="app__header">
+        UNGA GRUNGA BUNGA
+      </div>
+      <div className="app__body">
+        <Routes>
+          <Route
+            path="login"
+            element={<Authenticate onLogIn={logIn} />}
+          />
+          { auth.loggedIn ?
+            <Route
+              path="home"
+              element={<Home onLogOut={logOut} />}
+            >
+            </Route>
+            :
+            ''
+          }
+          { auth.loggedIn ?
+            <Route path="manage">
+              <Route path="comics" element={<ManageComics />} />
+              <Route path="new" element={<NewComic />} />
+            </Route>
+            :
+            ''
+          }
+          <Route
+            path="*"
+            element={<NotFound />}
+          />
+        </Routes>
+      </div>
+    </div>
   )
 }
 

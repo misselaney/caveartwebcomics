@@ -134,8 +134,10 @@ function NewComic() {
 
   }, [])
 
+
   return (
     <div>
+      <h1>Create A Comic</h1>
       <TextInput
         labelText="Comic name"
         id="comic_name"
