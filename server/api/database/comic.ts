@@ -23,7 +23,6 @@ export const comic = {
     return result
   },
   addGenres: async function (comic: number, genres: ITableNameIDPair[]) {
-    console.log("AddGenres")
     const pool = await db.connect()
     const concatRows = function (accumulator: string, currentValue: string) {
       return `${accumulator}, (${comic}, ${currentValue})`
@@ -48,20 +47,19 @@ export const comic = {
   },
   getAllStyles: async function () {
     const pool = await db.connect()
-    const sql =  `SELECT id, name FROM styles`
+    const sql = `SELECT id, name FROM styles`
     const result = await pool
       .query(sql)
-        .then((data: QueryResult<any>) => {
-          return data.rows
-        })
-        .catch((err: Error) => {
-          return { error: err.message }
-        })
+      .then((data: QueryResult<any>) => {
+        return data.rows
+      })
+      .catch((err: Error) => {
+        return { error: err.message }
+      })
     pool.release()
     return result
   },
   addStyles: async function (comic: number, styles: ITableNameIDPair[]) {
-    console.log("AddStyles")
     const pool = await db.connect()
     const concatRows = function (accumulator: string, currentValue: string) {
       return `${accumulator}, ${comic}, ${currentValue}`
@@ -76,12 +74,25 @@ export const comic = {
     console.log(sql)
     const result = await pool
       .query(sql)
-        .then((data: QueryResult<any>) => {
-          return data.rows
-        })
-        .catch((err: Error) => {
-          return { error: err.message }
-        })
+      .then((data: QueryResult<any>) => {
+        return data.rows
+      })
+      .catch((err: Error) => {
+        return { error: err.message }
+      })
+    pool.release()
+    return result
+  },
+  getComicsByAuthor: async function (author: number) {
+    const pool = await db.connect()
+    const result = await pool
+      .query(`SELECT * FROM comics WHERE author = $1`, [author])
+      .then((data: QueryResult<any>) => {
+        return data.rows
+      })
+      .catch((err: Error) => {
+        return { error: err.message }
+      })
     pool.release()
     return result
   }
