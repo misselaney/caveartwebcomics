@@ -67,24 +67,24 @@ export const genre = {
           return data.rows[0].jsonb_object_agg
         })
         .catch((err: Error) => {
-          return { error: 'An error occurred searching for genres.' }
+          return { error: err.message }
         })
     pool.release()
     return result
   },
-  // getGenre: async function (id: number) {
-  //   const pool = await db.connect()
-  //   const result = await pool
-  //     .query('SELECT name, description FROM genres WHERE id=$1', [id])
-  //       .then((data: QueryResult<any>) => {
-  //         return data.rows
-  //       })
-  //       .catch((err: Error) => {
-  //         return { error: 'An error occurred searching for a genre.' }
-  //       })
-  //   pool.release()
-  //   return result
-  // },
+  getGenre: async function (id: number) {
+    const pool = await db.connect()
+    const result = await pool
+      .query('SELECT name, description FROM genres WHERE id=$1', [id])
+        .then((data: QueryResult<any>) => {
+          return data.rows
+        })
+        .catch((err: Error) => {
+          return { error: err.message }
+        })
+    pool.release()
+    return result
+  },
 }
 
 export default genre

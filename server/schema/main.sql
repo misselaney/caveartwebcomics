@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS comics (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL UNIQUE,
     subdomain TEXT NOT NULL UNIQUE,
+    description TEXT,
     author INT references users(id),
     created_at TIMESTAMP DEFAULT NOW(),
     UNIQUE (author, name)
@@ -35,7 +36,7 @@ CREATE TABLE IF NOT EXISTS chapters (
 );
 CREATE TABLE IF NOT EXISTS comics_to_genres (
     id SERIAL PRIMARY KEY,
-    comic_id INT REFERENCES comics(id),
+    comic_id INT REFERENCES comics(id) ON DELETE CASCADE,
     genre_id INT REFERENCES genres(id),
     UNIQUE (comic_id, genre_id)
 );

@@ -34,6 +34,7 @@ function NewComic() {
   const [style, setStyle] = useState<string>('')
   const [selectedGenres, setSelectedGenres] = useState<{[key: string]: string}>(defaultPicks)
   const [visibility, setVisibility] = useState<string>('')
+  const [submissionError, setSubmissionError] = useState<boolean>(false)
 
   const onNameChange = function (e: React.ChangeEvent<HTMLInputElement>) {
     setName(e.target.value)
@@ -60,6 +61,28 @@ function NewComic() {
     }
     console.log(newGenres)
     setSelectedGenres(newGenres)
+  }
+
+  const submitComic = function () {
+    const comic = {
+      name,
+      subdomain,
+      description,
+      style,
+      selectedGenres,
+      visibility
+    }
+    axios({
+      method: 'post',
+      url: '/api/comic/new',
+      data: comic
+    })
+      .then((res) => {
+        console.log("eh")
+      })
+      .catch((err) => {
+        setSubmissionError(true)
+      })
   }
   
   useEffect(() => {
@@ -117,6 +140,7 @@ function NewComic() {
         labelText="Comic Subdomain"
         id="comic_subdomain"
         helperText="Your comic will (eventually) be accessible at example.caveart.net"
+        onChange={(e) => {onSubdomainChange(e)}}
       />
 
       <fieldset>
@@ -143,7 +167,7 @@ function NewComic() {
       <label htmlFor="comic_description">Description</label>
       <textarea
         id="comic_description"
-        onChange={(e) => {onDescriptionChange}}
+        onChange={(e) => {onDescriptionChange(e)}}
       >
       </textarea>
 
@@ -165,6 +189,14 @@ function NewComic() {
           )
         })}
       </fieldset>
+
+      <Button
+        type='button'
+        onClick={() => {submitComic()}}
+      >
+        Create
+      </Button>
+      { submissionError ? <span>There was an issue submitting your new comic.</span> : '' }
     </div>
   )
 }

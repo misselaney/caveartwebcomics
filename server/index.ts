@@ -5,6 +5,7 @@ import path from 'path'
 import cors from 'cors'
 import { Pool } from 'pg'
 import userRoutes from './api/user'
+import comicRoutes from './api/comic'
 import genreRoutes from './api/genre'
 
 const port = process.env.PORT || 5000
@@ -38,8 +39,11 @@ app
     allowedHeaders: ['Access-Control-Allow-Origin', 'Content-Type', 'Authorization', 'X-Requested-With', 'Origin', 'Accept'],
   })
 )
+
 app.use('/api/user', userRoutes)
 app.use('/api/genre', genreRoutes)
+app.use('/api/comic', comicRoutes)
+
 app.use(Express.static(path.join(__dirname, '/../build')))
 
 app.get('*', function (req: Express.Request, res: Express.Response) {
