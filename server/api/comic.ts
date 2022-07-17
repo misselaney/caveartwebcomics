@@ -1,6 +1,4 @@
-import  Express, { Request, Response } from 'express'
-import { db } from '../index'
-import { QueryResult } from 'pg'
+import Express, { Request, Response } from 'express'
 import { comic } from './database/comic'
 import { style } from './database/style'
 import { IComic } from '../interfaces'
@@ -27,11 +25,21 @@ comicRoutes.post('/new', async (req: Request, res: Response) => {
 })
 
 comicRoutes.get('/style', async (req: Request, res: Response) => {
-  let queryResult = await style.getAllStyles()
+  const queryResult = await style.getAllStyles()
   if (Array.isArray(queryResult)) {
     res.status(200).send(queryResult)
   } else {
     res.status(500).send({ error: 'There was an issue retrieving styles.' })
+  }
+})
+
+comicRoutes.get('/author/:id', async (req: Request, res: Response) => {
+  const author = parseInt(req.params.id)
+  const queryResult = await comic.getComicsByAuthor(author)
+  if (Array.isArray(queryResult)) {
+    res.status(200).send(queryResult)
+  } else {
+    res.status(500).send({ error: queryResult.error || 'Error getting comics by this author.' })
   }
 })
 
