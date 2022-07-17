@@ -198,3 +198,7 @@ label.checkbox__label:not([for]) {
   display: block; /* Fallback for non-webkit */
   display: -webkit-box;
 }
+
+.upload__preview {
+  width: 25%;
+}

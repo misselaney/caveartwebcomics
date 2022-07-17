@@ -1,10 +1,11 @@
-import React, { Component, useState } from 'react'
+import React, { useState } from 'react'
 import { Route, Routes, Navigate, Outlet } from 'react-router-dom'
 import Authenticate from './pages/Authenticate'
 import { Home } from './pages/Home'
 import ManageComics from './pages/ManageComics'
 import NewComic from './pages/NewComic'
 import NotFound from './pages/NotFound'
+import UploadComic from './pages/UploadComic'
 import axios from 'axios'
 import '@marissaconner/sousanne-component-library/index.css'
 axios.defaults.withCredentials = true
@@ -12,21 +13,21 @@ axios.defaults.baseURL = 'http://localhost:5000'
 
 function App() {
   const existingTokens = localStorage.getItem('tokens')
-  
-  const checkAuth = async function () {
-    axios({
-      method: 'get',
-      url: 'http://localhost:5000/api/user/session',
-    })
-      .then((session) => {
-        return true
-      })
-      .catch((err) => {
-        return false
-        console.error(existingTokens)
-        console.error(err)
-      })
-  }
+
+  // const checkAuth = async function () {
+  //   axios({
+  //     method: 'get',
+  //     url: 'http://localhost:5000/api/user/session',
+  //   })
+  //     .then((session) => {
+  //       return true
+  //     })
+  //     .catch((err) => {
+  //       return false
+  //       console.error(existingTokens)
+  //       console.error(err)
+  //     })
+  // }
 
   const [auth, setAuth] = useState({
     token: existingTokens,
@@ -89,6 +90,7 @@ function App() {
             <Route path="manage">
               <Route path="comics" element={<ManageComics />} />
               <Route path="new" element={<NewComic />} />
+              <Route path="upload/:name" element={<UploadComic />} />
             </Route>
             :
             ''

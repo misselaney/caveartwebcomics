@@ -45,24 +45,10 @@ export const comic = {
     pool.release()
     return result
   },
-  getAllStyles: async function () {
-    const pool = await db.connect()
-    const sql = `SELECT id, name FROM styles`
-    const result = await pool
-      .query(sql)
-      .then((data: QueryResult<any>) => {
-        return data.rows
-      })
-      .catch((err: Error) => {
-        return { error: err.message }
-      })
-    pool.release()
-    return result
-  },
   addStyles: async function (comic: number, styles: ITableNameIDPair[]) {
     const pool = await db.connect()
     const concatRows = function (accumulator: string, currentValue: string) {
-      return `${accumulator}, ${comic}, ${currentValue}`
+      return `${accumulator}, (${comic}, ${currentValue})`
     }
 
     const styleIDs = Object.keys(styles)
@@ -71,7 +57,6 @@ export const comic = {
       INSERT INTO comics_to_styles (comic_id, style_id)
       VALUES ${styleIDs.reduce(concatRows, initValue)}
     `
-    console.log(sql)
     const result = await pool
       .query(sql)
       .then((data: QueryResult<any>) => {
