@@ -1,5 +1,4 @@
 import  Express, { Request, Response } from 'express'
-import { db } from '../index'
 import { QueryResult } from 'pg'
 import { genre } from './database/genre'
 

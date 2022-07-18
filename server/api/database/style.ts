@@ -1,9 +1,9 @@
-import { db } from '../../index'
 import { QueryResult } from 'pg'
+import PoolConnection from '../../database/connection'
 
 export const style = {
   getAllStyles: async function () {
-    const pool = await db.connect()
+    const pool = await PoolConnection.get().connect()
     const sql =  `SELECT id, name, description FROM styles`
     const result = await pool
       .query(sql)

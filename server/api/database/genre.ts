@@ -1,5 +1,5 @@
-import { db } from '../../index'
 import { QueryResult } from 'pg'
+import PoolConnection from '../../database/connection'
 
 const buildNestedChildren = function (id: number = 0) {
   return `WITH RECURSIVE tree AS (
@@ -58,7 +58,7 @@ const buildNestedChildren = function (id: number = 0) {
 
 export const genre = {
   getAllGenres: async function () {
-    const pool = await db.connect()
+    const pool = await PoolConnection.get().connect()
     const sql =  buildNestedChildren()
     const result = await pool
       .query(sql)
@@ -72,7 +72,7 @@ export const genre = {
     return result
   },
   getGenre: async function (id: number) {
-    const pool = await db.connect()
+    const pool = await PoolConnection.get().connect()
     const result = await pool
       .query('SELECT name, description FROM genres WHERE id=$1', [id])
         .then((data: QueryResult<any>) => {

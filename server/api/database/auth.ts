@@ -1,12 +1,11 @@
-import { db } from '../../index'
 import { QueryResult } from 'pg'
 import translator from '../../languages/translate'
-
 const t = translator.translate
+import PoolConnection from '../../database/connection'
 
 export const auth = {
   createNewUser: async function (email: string, passwordHash: string) {
-    const pool = await db.connect()
+    const pool = await PoolConnection.get().connect()
     const sql = `
       INSERT INTO users (email, password)
       VALUES ($1, $2)
@@ -25,7 +24,7 @@ export const auth = {
     return result
   },
   getUserByCredentials: async function (email: string, passwordHash: string) {
-    const pool = await db.connect()
+    const pool = await PoolConnection.get().connect()
     const sql = 'SELECT id FROM users WHERE email=$1 AND password=$2'
     const values = [email, passwordHash]
     const result = await pool
@@ -43,7 +42,7 @@ export const auth = {
     return result
   },
   updateUserSession: async function (userId: number, sessionHash: string) {
-    const pool = await db.connect()
+    const pool = await PoolConnection.get().connect()
     const sql = `
       UPDATE users
       SET
@@ -64,7 +63,7 @@ export const auth = {
     return result
   },
   confirmUserSession: async function (sessionHash: string, id: number) {
-    const pool = await db.connect()
+    const pool = await PoolConnection.get().connect()
     const sql = `
       SELECT id
       FROM users
@@ -89,7 +88,7 @@ export const auth = {
       return result
   },
   clearUserSession: async function (sessionHash: string, id: number) {
-    const pool = await db.connect()
+    const pool = await PoolConnection.get().connect()
     const sql = `UPDATE users SET session_hash = null WHERE id = $2 AND session_hash = $1`
     const values = [sessionHash, id]
     const result = await pool

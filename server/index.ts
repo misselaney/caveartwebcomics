@@ -3,26 +3,11 @@ import bodyParser from 'body-parser'
 import cookieParser from './utils/cookieParser'
 import path from 'path'
 import cors from 'cors'
-import { Pool } from 'pg'
 import userRoutes from './api/user'
 import comicRoutes from './api/comic'
 import genreRoutes from './api/genre'
-
-
-
 const port = process.env.PORT || 5000
 const router = Express.Router()
-const pgConfig = {
-  max: 20,
-  idleTimeoutMillis: 30000,
-  user: 'postgres',
-  host: 'localhost',
-  database: 'caveart',
-  password: 'bacon',
-  port: 5432,
-};
-
-export const db = new Pool(pgConfig)
 
 let app: Express.Application | undefined = undefined
 app = Express()

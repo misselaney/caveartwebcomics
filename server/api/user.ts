@@ -1,5 +1,4 @@
 import  Express, { Request, Response } from 'express'
-import { db } from '../index'
 import { QueryResult } from 'pg'
 import { createHash, compareHash, createRandom } from '../utils/hash'
 import { auth } from './database/auth'
