@@ -6,8 +6,10 @@ import multer from 'multer'
 import path from 'path'
 import fs from 'fs'
 import { createHash, createRandom } from '../utils/hash'
-const comicRoutes = Express.Router()
+import translator from '../languages/translate'
 
+const comicRoutes = Express.Router()
+const t = translator.translate
 const extensions = ['.png', '.gif', '.jpg', '.jpeg']
 
 const fileStorage = multer.diskStorage({
@@ -85,13 +87,11 @@ comicRoutes.get('/author/:id', async (req: Request, res: Response) => {
 comicRoutes.post('/upload', async (req: Request, res: Response) => { 
   uploadNewComicPage(req, res, async function(err) {
     if (err) {
-      console.log(err.message)
       res.status(500).send({ error: err.message })
     }
+
     if (req.file?.path) {
       const valid = await comic.isValidAuthor(req.body.comic, req.cookies.caveartwebcomicsuser)
-      let pageNumber = req.body.pageNumber
-
       if (valid) {
         const page = {
           img: req.file.path,
@@ -100,11 +100,21 @@ comicRoutes.post('/upload', async (req: Request, res: Response) => {
         }
         const queryResult = await comic.createPage(page)
         if (queryResult.error) {
-          res.status(500).send({ error: 'Server error ocurred when saving a file upload to a particular comic.' })
+          res.status(500).send({ error: 'Server error ocurred when saving a file upload to a particular comic:' + queryResult.error })
         }
         res.status(200).send()
+      } else {
+        console.log("Not valid.")
+        fs.unlink(req.file.path, (err) => {
+          if (err) {
+            console.error(err)
+          }
+        })
+        res.status(400).send({error: t('noPermissionToEditComic')})
       }
-    } else {
+    }
+
+    else {
       res.status(500).send({ error: 'Miscellaneous server error ocurred after uploading the image file.' })
     }
   })
