@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { createHash, createRandom } from '../utils/hash'
-import { auth } from '../database/auth'
+import { auth } from '../services/auth'
 
 export const userController = {
   createUser: async function (req: Request, res: Response) {

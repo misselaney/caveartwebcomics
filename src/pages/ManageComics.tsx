@@ -16,17 +16,12 @@ function ManageComics() {
   const [comics, setComics] = useState<Comic[]>([])
 
   useEffect(() => {
-    let id = 0
-    const tokens = localStorage.getItem('tokens')
-    if (typeof tokens === 'string') {
-      id = JSON.parse(tokens).caveartwebcomicsId
-      axios.get(`/api/comic/author/${id}`)
-        .then((res) => {
-          if (Array.isArray(res.data)) {
-            setComics(res.data)
-          }
-        })
-    }
+    axios.get(`/api/comic/mine`)
+      .then((res) => {
+        if (Array.isArray(res.data)) {
+          setComics(res.data)
+        }
+      })
   },[])
 
   const renderComicList = function(list: Comic[]) {
@@ -50,7 +45,11 @@ function ManageComics() {
         </ul>
       )
     }
-    return <li>low</li>
+    return (
+      <div>
+        You don&rsquo;t have any comics yet!
+      </div>
+    )
   }
 
   return (

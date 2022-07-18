@@ -106,7 +106,7 @@ function NewComic() {
   useEffect(() => {    
     axios({
       method: 'get',
-      url: '/api/genre'
+      url: '/api/category/genre'
     })
       .then((res) => {
         const data = Object.values(res.data)
@@ -115,12 +115,12 @@ function NewComic() {
         }
       })
       .catch((err) => {
-        console.error(err)
+        console.error(err.response.data.error)
       })
 
     axios({
       method: 'get',
-      url: '/api/comic/style'
+      url: '/api/category/style'
     })
       .then((res) => {
         const data = Object.values(res.data)
@@ -129,11 +129,9 @@ function NewComic() {
         }
       })
       .catch((err) => {
-        console.error(err)
+        console.error(err.response.data.error)
       })
-
   }, [])
-
 
   return (
     <div>

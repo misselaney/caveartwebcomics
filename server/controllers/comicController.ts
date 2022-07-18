@@ -1,10 +1,10 @@
 import { Request, Response } from 'express'
 import { IComic, ITableNameIDPair, IComicPage } from '../interfaces'
-import { category } from '../database/category'
-import { comic } from '../database/comic'
+import { category } from '../services/category'
+import { comic } from '../services/comic'
 
 export const comicController = {
-  createComic: async function (req: Request, res: Response) {
+  create: async function (req: Request, res: Response) {
     const { name, string, selectedStyles, subdomain, description, selectedGenres, visibility } = req.body
     const author = req.cookies.caveartwebcomicsuser
     const comicData = { name, string, subdomain, description, visibility, author } as IComic
@@ -26,6 +26,24 @@ export const comicController = {
       res.status(500).send(newComic)
     }
     res.status(200).send({ id: comicID })
+  },
+
+  getByAuthor: async function (req: Request, res: Response) {
+    const author = req.body.author
+    const comics = await comic.getByAuthor(author)
+    if (comics.error) {
+      res.status(500).send(comics.error)
+    }
+    res.status(200).send(comics)
+  },
+
+  getByEndUser: async function (req: Request, res: Response) {
+    const author = req.cookies.caveartwebcomicsuser
+    const comics = await comic.getByAuthor(author)
+    if (comics.error) {
+      res.status(500).send(comics.error)
+    }
+    res.status(200).send(comics)
   }
 }
 

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { IComic, ITableNameIDPair, IComicPage } from '../interfaces'
-import { category } from '../database/category'
+import { category } from '../services/category'
 
 export const categoryController = {
   getStyles: async function (req: Request, res: Response) {
