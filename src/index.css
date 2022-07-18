@@ -5,6 +5,37 @@
   --border-radius: 4px;
 }
 
+html, body, #root {
+  height: 100%;
+  min-height: 100%;
+}
+
+.app {
+  display: flex;
+  flex: 1 0 auto;
+  height: 100%;
+  flex-direction: column;
+  background-color: var(--col-background-20);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.app__body {
+  flex: 1 0 auto;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.app__footer {
+  flex-shrink: 0;
+  text-align: center;
+  padding: var(--spacing-lg);
+  background-color: var(--col-background-30);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -22,15 +53,15 @@ h1, h2, h3, h4, h5, h6 {
   font-family: Tahoma,Verdana,Segoe,sans-serif;
 }
 
-.app {
-  background-color: var(--col-background-20);
-}
-
 .app__header {
   background-color: var(--col-background-70);
   color: var(--col-text-inverse);
   padding:  var(--spacing-md);
   text-align: center;
+}
+
+.app {
+  flex: 1 0 auto;
 }
 
 .app__body {

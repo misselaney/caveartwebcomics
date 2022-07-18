@@ -71,7 +71,8 @@ function App() {
       <div className="app__header">
         UNGA GRUNGA BUNGA
       </div>
-      <div className="app_body">
+
+      <div className="app__body">
         <Routes>
           <Route
             path="login"
@@ -100,6 +101,10 @@ function App() {
             element={<NotFound />}
           />
         </Routes>
+      </div>
+
+      <div className="app__footer">
+        Footer
       </div>
     </div>
   )
