@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-
+import { useParams } from 'react-router-dom'
 function UploadComic() {
 
   const [files, setFiles] = useState<FileList>()
   const [src, setSrc] = useState<string>()
   const [error, setError] = useState<boolean>(false)
+  const { comic } = useParams()
 
   const generatePreview = function(e: React.ChangeEvent<HTMLInputElement>) {
     const target = e.target
@@ -20,7 +21,9 @@ function UploadComic() {
     const input = document.querySelector('#comicpage') as HTMLInputElement
     if (input.files) {
       const upload = input.files[0]
-      formData.append('file', upload)
+      formData.append('comicpage', upload)
+      formData.append('comic', comic as string)
+      console.log(formData)
       axios({
         method: 'post',
         url: '/api/comic/upload',

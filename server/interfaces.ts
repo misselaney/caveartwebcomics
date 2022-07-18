@@ -9,3 +9,16 @@ export interface IComic {
 export interface ITableNameIDPair {
   [key:string]: string
 }
+
+export interface IComicPage {
+  img: string,
+  comicId: number,
+  id?: number,
+  pageNumber?: number,
+  chapterId?: number,
+  createdAt?: number,
+}
+
+export interface ITranslationTable {
+  [key:string]: string
+}

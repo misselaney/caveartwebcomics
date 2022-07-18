@@ -1,6 +1,6 @@
 import { db } from '../../index'
 import { QueryResult } from 'pg'
-import { IComic, ITableNameIDPair } from '../../interfaces'
+import { IComic, ITableNameIDPair, IComicPage } from '../../interfaces'
 
 export const comic = {
   create: async function (comic: IComic) {
@@ -80,6 +80,49 @@ export const comic = {
       })
     pool.release()
     return result
+  },
+  isValidAuthor: async function (comic: number | string, author: number) {
+    const pool = await db.connect()
+    const sql = `SELECT 1 FROM comics WHERE (id = $1 OR subdomain = '$1') AND author = $2`
+    const result = await pool
+      .query(sql, [comic, author])
+      .then((data: QueryResult<any>) => {
+        return !!data.rows[0]
+      })
+      .catch((err: Error) => {
+        return { error: err.message }
+      })
+    pool.release()
+    return result
+  },
+  getNextPageNumber: async function (comic: number) {
+    const pool = await db.connect()
+    const sql = `SELECT count(id) + 1 as pagenumber FROM comicpages WHERE comic_id = $1`
+    const result = await pool
+      .query(sql, [comic])
+      .then((data: QueryResult<any>) => {
+        return data.rows[0].pagenumber
+      })
+      .catch((err: Error) => {
+        return { error: err.message }
+      })
+      pool.release()
+      return result
+  },
+  createPage: async function (page: IComicPage) {
+    const pool = await db.connect()
+    const { img, pageNumber, comicId } = page
+    const sql = `INSERT INTO comicpages (img, page_number, comic_id) VALUES ($1, $2, $3) RETURNING id`
+    const result = await pool
+      .query(sql, [img, pageNumber, comicId])
+      .then((data: QueryResult<any>) => {
+        return data.rows[0]
+      })
+      .catch((err: Error) => {
+        return { error: err.message }
+      })
+      pool.release()
+      return result
   },
 }
 

@@ -1,11 +1,11 @@
-import Express, { Request, Response } from 'express'
+import Express, { Request, Response, NextFunction } from 'express'
 import { comic } from './database/comic'
 import { style } from './database/style'
 import { IComic } from '../interfaces'
 import multer from 'multer'
 import path from 'path'
 import fs from 'fs'
-
+import { createHash, createRandom } from '../utils/hash'
 const comicRoutes = Express.Router()
 
 const extensions = ['.png', '.gif', '.jpg', '.jpeg']
@@ -15,17 +15,20 @@ const fileStorage = multer.diskStorage({
     callback(null, './uploads')
   },
   filename: function (req, file, callback) {
-    console.log(file)
-    callback(null, `${file.fieldname}-${Date.now()}-${path.extname(file.originalname)}`)
+    const fileHash = createHash(createRandom()).substr(1,10)
+    const fileName = `${file.fieldname}_${fileHash}_${Date.now()}${path.extname(file.originalname)}`
+    callback(null, fileName)
   }
 })
 
-const upload = multer({
+const uploadNewComicPage = multer({
   storage: fileStorage,
+  limits: {
+    fieldSize: 1500 * 1024,
+    fieldNameSize: 200
+  },
   fileFilter: function(req, file, callback) {
-    console.log('file filter is running')
     const ext = path.extname(file.originalname);
-    console.log(file)
     if (!extensions.includes(ext)) {
       callback(new Error('Invalid file extension.'))
       return
@@ -39,7 +42,7 @@ const upload = multer({
     callback(null, true)
   }
 })
-.single('file')
+.single('comicpage')
 
 comicRoutes.post('/new', async (req: Request, res: Response) => {
   const { name, string, selectedStyles, subdomain, description, selectedGenres, visibility } = req.body
@@ -79,17 +82,32 @@ comicRoutes.get('/author/:id', async (req: Request, res: Response) => {
   }
 })
 
-comicRoutes.post('/upload', async (req: Request, res: Response) => {
-  upload(req, res, function(err) {
+comicRoutes.post('/upload', async (req: Request, res: Response) => { 
+  uploadNewComicPage(req, res, async function(err) {
     if (err) {
-      console.log("Error!")
-      console.log(err)
-      res.status(500).send()
+      console.log(err.message)
+      res.status(500).send({ error: err.message })
     }
-    res.status(200).send()
-  })
+    if (req.file?.path) {
+      const valid = await comic.isValidAuthor(req.body.comic, req.cookies.caveartwebcomicsuser)
+      let pageNumber = req.body.pageNumber
 
-  
+      if (valid) {
+        const page = {
+          img: req.file.path,
+          pageNumber: req.body.pageNumber || await comic.getNextPageNumber(req.body.comic),
+          comicId: req.body.comic
+        }
+        const queryResult = await comic.createPage(page)
+        if (queryResult.error) {
+          res.status(500).send({ error: 'Server error ocurred when saving a file upload to a particular comic.' })
+        }
+        res.status(200).send()
+      }
+    } else {
+      res.status(500).send({ error: 'Miscellaneous server error ocurred after uploading the image file.' })
+    }
+  })
 })
 
 export default comicRoutes

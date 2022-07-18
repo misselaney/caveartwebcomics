@@ -90,7 +90,7 @@ function App() {
             <Route path="manage">
               <Route path="comics" element={<ManageComics />} />
               <Route path="new" element={<NewComic />} />
-              <Route path="upload/:name" element={<UploadComic />} />
+              <Route path="upload/:comic" element={<UploadComic />} />
             </Route>
             :
             ''

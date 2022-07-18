@@ -1,5 +1,8 @@
 import { db } from '../../index'
 import { QueryResult } from 'pg'
+import translator from '../../languages/translate'
+
+const t = translator.translate
 
 export const auth = {
   createNewUser: async function (email: string, passwordHash: string) {
@@ -16,7 +19,7 @@ export const auth = {
           return data.rows[0]
         })
         .catch((err: Error) => {
-          return { error: 'An error occurred creating a new user.' }
+          return { error: t('createNewUserError') }
         })
     pool.release()
     return result
@@ -31,10 +34,10 @@ export const auth = {
           if (data.rows.length === 1) {
             return data.rows[0]
           }
-          return { error: 'No such user with this login information.' }
+          return { error: t('noSuchUser') }
         })
         .catch((err: Error) => {
-          return { error: 'No such user with this login information.' }
+          return { error: t('noSuchUser') }
         })
     pool.release()
     return result
@@ -55,7 +58,7 @@ export const auth = {
           return { hash: sessionHash }
         })
         .catch((err: Error) => {
-          return { error: 'Error updating user session.' }
+          return { error: t('errorUpdatingSession') }
         })
     pool.release()
     return result
@@ -77,10 +80,10 @@ export const auth = {
           if (data.rows.length === 1) {
             return data.rows[0]
           }
-          return { error: 'No such user with this login information.' }
+          return { error: t('noSuchUser') }
         })
         .catch((err: Error) => {
-          return { error: 'Error obtaining a user with that session hash.' }
+          return { error: t('invalidSession') }
         })
       pool.release()
       return result
@@ -95,7 +98,7 @@ export const auth = {
           return { error: false }
         })
         .catch((err: Error) => {
-          return { error: 'Error logging out.' }
+          return { error: t('errorOnLogOut') }
         })
       pool.release()
       return result
