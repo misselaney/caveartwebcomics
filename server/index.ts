@@ -3,9 +3,10 @@ import bodyParser from 'body-parser'
 import cookieParser from './utils/cookieParser'
 import path from 'path'
 import cors from 'cors'
-import userRoutes from './api/user'
-import comicRoutes from './api/comic'
-import genreRoutes from './api/genre'
+import userRoutes from './routes/user'
+import categoryRoutes from './routes/category'
+import comicRoutes from './routes/comic'
+
 const port = process.env.PORT || 5000
 const router = Express.Router()
 
@@ -28,7 +29,7 @@ app
 )
 
 app.use('/api/user', userRoutes)
-app.use('/api/genre', genreRoutes)
+app.use('/api/category', categoryRoutes)
 app.use('/api/comic', comicRoutes)
 
 app.use(Express.static(path.join(__dirname, '/../build')))

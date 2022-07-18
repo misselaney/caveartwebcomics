@@ -104,7 +104,6 @@ comicRoutes.post('/upload', async (req: Request, res: Response) => {
         }
         res.status(200).send()
       } else {
-        console.log("Not valid.")
         fs.unlink(req.file.path, (err) => {
           if (err) {
             console.error(err)

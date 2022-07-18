@@ -1,16 +1,15 @@
-import { QueryResult } from 'pg'
-import PoolConnection from '../../database/connection'
+import { ITableNameIDPair } from '../interfaces'
 
-const buildNestedChildren = function (id: number = 0) {
+export const buildNestedChildren = function (table: string, id: number = 0) {
   return `WITH RECURSIVE tree AS (
       SELECT *, 0 as lvl
-      FROM   genres
+      FROM   ${table}
       WHERE  parent_id ${id !== 0 ? '=$1' : ' IS NULL'}
 
       UNION ALL
       
       SELECT child.*, parent.lvl + 1
-      FROM   genres child
+      FROM   ${table} child
       JOIN   tree parent ON parent.id = child.parent_id
     ),
     maxlvl AS (
@@ -56,34 +55,14 @@ const buildNestedChildren = function (id: number = 0) {
     WHERE lvl = 0;`
 }
 
-export const genre = {
-  getAllGenres: async function () {
-    const pool = await PoolConnection.get().connect()
-    const sql =  buildNestedChildren()
-    const result = await pool
-      .query(sql)
-        .then((data: QueryResult<any>) => {
-          return data.rows[0].jsonb_object_agg
-        })
-        .catch((err: Error) => {
-          return { error: err.message }
-        })
-    pool.release()
-    return result
-  },
-  getGenre: async function (id: number) {
-    const pool = await PoolConnection.get().connect()
-    const result = await pool
-      .query('SELECT name, description FROM genres WHERE id=$1', [id])
-        .then((data: QueryResult<any>) => {
-          return data.rows
-        })
-        .catch((err: Error) => {
-          return { error: err.message }
-        })
-    pool.release()
-    return result
-  },
+export const buildOneToManyRowValues = function (one: number, many: ITableNameIDPair[]) {
+  const list = []
+  for (let i = 0; i < many.length; i++) {
+    list.push(many[i].id)
+  }
+  const initValue = `(${one}, ${list.shift()})`
+  const addRow = function (accumulator: string, currentValue: string) {
+    return `${accumulator}, (${one}, ${currentValue})`
+  }
+  return list.reduce(addRow, initValue)
 }
-
-export default genre

@@ -27,13 +27,11 @@ export const comic = {
     const concatRows = function (accumulator: string, currentValue: string) {
       return `${accumulator}, (${comic}, ${currentValue})`
     }
-    console.log(genres)
     const genreIDs = Object.keys(genres)
     const initValue = `(${comic}, ${genreIDs.shift()})`
     const sql = `
       INSERT INTO comics_to_genres (comic_id, genre_id)
       VALUES ${genreIDs.reduce(concatRows, initValue)}`
-    console.log(sql)
     const result = await pool
       .query(sql)
       .then((data: QueryResult<any>) => {

@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS styles (
 );
 CREATE TABLE IF NOT EXISTS comics (
     id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL UNIQUE,
+    name TEXT NOT NULL,
     subdomain TEXT NOT NULL UNIQUE,
     description TEXT,
     author INT references users(id),
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS comicpages (
     id SERIAL PRIMARY KEY,
     page_number INT,
     img TEXT NOT NULL UNIQUE,
-    comic_id INT REFERENCES comics(id),
+    comic_id INT REFERENCES comics(id) ON DELETE CASCADE,
     chapter_id INT REFERENCES chapters(id),
     created_at TIMESTAMP DEFAULT NOW(),
     UNIQUE (comic_id, chapter_id, page_number)

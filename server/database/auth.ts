@@ -1,7 +1,7 @@
 import { QueryResult } from 'pg'
-import translator from '../../languages/translate'
+import translator from '../languages/translate'
 const t = translator.translate
-import PoolConnection from '../../database/connection'
+import PoolConnection from './connection'
 
 export const auth = {
   createNewUser: async function (email: string, passwordHash: string) {
