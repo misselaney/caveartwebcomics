@@ -6,5 +6,6 @@ import { Request, Response } from 'express'
 comicRoutes.post('/new', comicController.create)
 comicRoutes.get('/by/:author', comicController.getByAuthor)
 comicRoutes.get('/mine', comicController.getByEndUser)
+comicRoutes.post('/upload', comicController.addPage)
 
 export default comicRoutes
