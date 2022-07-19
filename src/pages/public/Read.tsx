@@ -5,6 +5,7 @@ import axios from 'axios'
 function Read() {
 
   const [image, setImage] = useState<string>('')
+  const [isLastPage, setIsLastPage] = useState<boolean>(false)
   const { comic } = useParams()
   const { page } = useParams()
   
@@ -12,14 +13,27 @@ function Read() {
     axios({
       method: 'get',
       url: `/api/comic/page/${comic}/${page}`,
-      data: { comic, page }
     })
       .then((res) => {
-        console.log(res)
         if (res.data?.img) {
           setImage(res.data.img)
         }
       })
+      .catch((err) => {
+        console.error(err)
+      })
+
+    axios({
+      method: 'get',
+      url: `api/comic/pagecount/${comic}`
+    })
+      .then((res) => {
+        console.log(res.data)
+      })
+      .catch((err) => {
+        console.error(err)
+      })
+
   },[])
   
   let prevPage = 0
