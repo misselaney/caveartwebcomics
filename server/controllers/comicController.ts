@@ -75,7 +75,7 @@ export const comicController = {
           if (req.body.pageNumber === undefined) {
             pageCount = await comic.getPageCount(req.body.comic)
           }
-          const nextPageNumber = pageCount++
+          const nextPageNumber = pageCount + 1
           const page = {
             img: req.file.path,
             pageNumber: nextPageNumber,
@@ -109,6 +109,18 @@ export const comicController = {
     const queryResult = await comic.getPage(comicID, parseInt(req.params.page))
     if (queryResult.error) {
       res.status(500).send({ error: `There was an issue getting a comic page: ${queryResult.error}`})
+    }
+    res.status(200).send(queryResult)
+  },
+
+  getPageCount: async (req: Request, res: Response) => {
+    let comicID = await getComicID(req.params.comic)
+    if (comicID < 0) {
+      res.status(500).send({ error: `This comic doesn't seem to exist.`})
+    }
+    const queryResult = await comic.getPageCount(req.params.comic)
+    if (queryResult.error) {
+      res.status(500).send({ error: `There was an issue getting the page count for a comic.`})
     }
     res.status(200).send(queryResult)
   }

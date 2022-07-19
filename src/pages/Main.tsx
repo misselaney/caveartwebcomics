@@ -26,14 +26,14 @@ function Main() {
 
   return (
     <div>
-        {comics.map((comic, idx) => {
-          return (
-            <a href={`read/${comic.subdomain}`} className="comicTiles" key={idx}>
-              <img className="comicTiles__thumbnail" src={comic.thumbnail} />
-              <span className="comicTiles__title">{comic.name}</span>
-            </a>
-          )
-        })}
+      {comics.map((comic, idx) => {
+        return (
+          <a href={`comic/${comic.subdomain}/read`} className="comicTiles" key={idx}>
+            <img className="comicTiles__thumbnail" src={comic.thumbnail} />
+            <span className="comicTiles__title">{comic.name}</span>
+          </a>
+        )
+      })}
     </div>
   )
 }

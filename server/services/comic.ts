@@ -76,21 +76,29 @@ export const comic = {
     const pool = await PoolConnection.get().connect()
     const sql = `
     SELECT DISTINCT
-      c.id,
-      c.name,
-      c.description,
-      c.thumbnail,
-      c.subdomain,
-      p.release_on
-    FROM comics c
-    JOIN comicpages p
-    ON p.comic_id = c.id
-    WHERE
-      c.unlisted IS FALSE
-      and
-      c.private IS FALSE
-    ORDER BY p.release_on DESC
-    LIMIT $1
+      id,
+      name,
+      description,
+      thumbnail,
+      subdomain
+    FROM (
+      SELECT
+        c.id,
+        c.name,
+        c.description,
+        c.thumbnail,
+        c.subdomain,
+        p.release_on
+      FROM comics c
+      JOIN comicpages p
+      ON p.comic_id = c.id
+      WHERE
+        c.unlisted IS FALSE
+        AND
+          c.private IS FALSE
+      ORDER BY p.release_on DESC
+      LIMIT $1
+    ) latestpages
     `
     const values = [count]
     const result = await pool
@@ -124,7 +132,7 @@ export const comic = {
 
   getPageCount: async function (comic: string) {
     const pool = await PoolConnection.get().connect()
-    const sql = `SELECT count(p.id) as pagecount FROM comicpages p JOIN comics c ON c.id=p.comic_id  WHERE ${parseInt(comic) > 0 ? 'p.comic_id' : 'c.subdomain' } = $1`
+    const sql = `SELECT count(p.id) as pagecount FROM comicpages p JOIN comics c ON c.id=p.comic_id WHERE ${parseInt(comic) > 0 ? 'p.comic_id' : 'c.subdomain' } = $1`
     console.log(sql)
     const result = await pool
       .query(sql, [comic])

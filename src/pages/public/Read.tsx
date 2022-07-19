@@ -5,14 +5,21 @@ import axios from 'axios'
 function Read() {
 
   const [image, setImage] = useState<string>('')
+  const [lastPage, setLastPage] = useState<number>(0)
   const [isLastPage, setIsLastPage] = useState<boolean>(false)
   const { comic } = useParams()
   const { page } = useParams()
-  
+  let currPage = 1
+  if (page !== undefined) {
+    currPage = parseInt(page)
+  }
+  const prevPage = currPage -1
+  const nextPage = currPage +1
+
   useEffect(() => {
     axios({
       method: 'get',
-      url: `/api/comic/page/${comic}/${page}`,
+      url: `/api/comic/page/${comic}/${currPage}`,
     })
       .then((res) => {
         if (res.data?.img) {
@@ -28,7 +35,10 @@ function Read() {
       url: `api/comic/pagecount/${comic}`
     })
       .then((res) => {
-        console.log(res.data)
+        if (typeof res.data === 'number') {
+          setLastPage(res.data)
+          setIsLastPage(nextPage > res.data)
+        }
       })
       .catch((err) => {
         console.error(err)
@@ -36,14 +46,6 @@ function Read() {
 
   },[])
   
-  let prevPage = 0
-  let nextPage = 1
-
-  if (page) {
-    prevPage = parseInt(page) - 1
-    nextPage = parseInt(page) + 1
-  }
-
   const goToFirst = function () {
     console.log('ook ook')
   }
@@ -67,22 +69,28 @@ function Read() {
       <div className="comic-page__navigation">
         <a
           className={ prevPage < 0 ? 'Disabled' : '' }
-          href={prevPage > 0 ? `/comic/${comic}/read/0` : '#' }
+          href={prevPage === 0 ? '#' : `/comic/${comic}/read/1` }
         >
           First
         </a>
         <a
           className={ prevPage < 0 ? 'Disabled' : '' }
-          href={prevPage > 0 ? `/comic/${comic}/read/${prevPage}` : '#' }
+          href={prevPage === 0 ? '#' : `/comic/${comic}/read/${prevPage}` }
         >
           Previous
         </a>
         <a
+          className= { isLastPage ? 'Disabled' : ''}
           href={`/comic/${comic}/read/${nextPage}`}
         >
           Next
         </a>
-        <a>Latest</a>
+        <a
+          className= { isLastPage ? 'Disabled' : ''}
+          href={`/comic/${comic}/read/${lastPage}`}
+        >
+          Latest
+        </a>
       </div>
     </div>
   )
