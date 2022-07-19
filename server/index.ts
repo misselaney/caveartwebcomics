@@ -23,7 +23,7 @@ app
   .use(cors({
     credentials: true,
     methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS',
-    origin: 'http://localhost:3000',
+    origin: 'http://localhost',
     allowedHeaders: ['Access-Control-Allow-Origin', 'Content-Type', 'Authorization', 'X-Requested-With', 'Origin', 'Accept'],
   })
 )

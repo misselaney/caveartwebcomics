@@ -4,6 +4,7 @@ import { category } from '../services/category'
 import { comic } from '../services/comic'
 import { auth } from '../services/auth'
 import { uploadNewComicPage } from '../services/upload'
+import { getComicID } from '../utils/queryHelpers'
 import fs from 'fs'
 
 export const comicController = {
@@ -49,19 +50,36 @@ export const comicController = {
     res.status(200).send(comics)
   },
 
+  getRecent: async function (req: Request, res: Response) {
+    const comics = await comic.getRecent()
+    if (comics.error) {
+      res.status(500).send(comics.error)
+    }
+    res.status(200).send(comics)
+  },
+
   addPage: async (req: Request, res: Response) => {
     uploadNewComicPage(req, res, async function(err) {
       if (err) {
         res.status(500).send({ error: err.message })
       }
+      let comicID = await getComicID(req.body.comic)
+      if (comicID < 0) {
+        res.status(500).send({ error: `Couldn't identify the comic you want to upload to.`})
+      }
+
       if (req.file?.path) {
         const valid = await auth.isAuthor(req.body.comic, req.cookies.caveartwebcomicsuser)
         if (valid) {
-          let pageCount = await comic.getPageCount(req.body.comic)
+          let pageCount = req.body.pageNumber
+          if (req.body.pageNumber === undefined) {
+            pageCount = await comic.getPageCount(req.body.comic)
+          }
+          const nextPageNumber = pageCount++
           const page = {
             img: req.file.path,
-            pageNumber: req.body.pageNumber || pageCount++,
-            comicId: req.body.comic
+            pageNumber: nextPageNumber,
+            comicId: comicID
           }
           const queryResult = await comic.createPage(page)
           if (queryResult.error) {

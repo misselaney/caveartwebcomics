@@ -54,10 +54,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .app__header {
-  background-color: var(--col-background-70);
+  background-color: var(--col-background-10);
   color: var(--col-text-inverse);
-  padding:  var(--spacing-md);
-  text-align: center;
+  padding: var(--spacing-md) var(--spacing-3xl);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .app {
@@ -232,4 +234,17 @@ label.checkbox__label:not([for]) {
 
 .upload__preview {
   width: 25%;
+}
+
+.comicTiles {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  list-style: none;
+  width: 8rem;
+}
+
+.comicTiles__thumbnail {
+  border: 1px solid var(--col-background-30);
+  width: 100%;
 }

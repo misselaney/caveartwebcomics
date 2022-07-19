@@ -1,5 +1,7 @@
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
+    name TEXT UNIQUE,
+    avatar TEXT,
     email TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL,
     session_hash TEXT DEFAULT null,
@@ -26,6 +28,7 @@ CREATE TABLE IF NOT EXISTS comics (
     created_at TIMESTAMP DEFAULT NOW(),
     unlisted BOOLEAN DEFAULT FALSE,
     private BOOLEAN DEFAULT FALSE,
+    thumbnail TEXT,
     UNIQUE (author, name)
 );
 CREATE TABLE IF NOT EXISTS chapters (
@@ -34,6 +37,7 @@ CREATE TABLE IF NOT EXISTS chapters (
     index INT NOT NULL,
     description TEXT NOT NULL,
     comic_id INT REFERENCES comics(id),
+    thumbnail TEXT,
     UNIQUE (comic_id, index)
 );
 CREATE TABLE IF NOT EXISTS comics_to_genres (
@@ -55,5 +59,15 @@ CREATE TABLE IF NOT EXISTS comicpages (
     comic_id INT REFERENCES comics(id) ON DELETE CASCADE,
     chapter_id INT REFERENCES chapters(id),
     created_at TIMESTAMP DEFAULT NOW(),
+    release_on TIMESTAMP DEFAULT NOW(),
+    members_only BOOLEAN DEFAULT false,
     UNIQUE (comic_id, chapter_id, page_number)
 );
+create table comics_readers (
+    id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(id),
+    comic_id INT REFERENCES comics(id),
+    created_at TIMESTAMP default NOW(),
+    dropped_at TIMESTAMP DEFAULT null,
+    UNIQUE (user_id, comic_id)
+)

@@ -44,7 +44,6 @@ function NewComic() {
   const [visibility, setVisibility] = useState<string>('')
   const [submissionError, setSubmissionError] = useState<boolean>(false)
 
-
   const onNameChange = function (e: React.ChangeEvent<HTMLInputElement>) {
     setName(e.target.value)
   }

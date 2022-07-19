@@ -49,7 +49,7 @@ export const category = {
     return result
   },
 
-  associateGenres: async function (comic: number, genres: ITableNameIDPair[]) {
+  associateGenres: async function (comic: number, genres: ITableNameIDPair) {
     if (Object.keys(genres).length > 0) {
       const pool = await PoolConnection.get().connect()
       const sql = `
@@ -58,7 +58,8 @@ export const category = {
       const result = await pool
         .query(sql)
         .then((data: QueryResult<any>) => {
-          return data.rows[0]
+          console.log(data.rows)
+          return { id: comic }
         })
         .catch((err: Error) => {
           return { error: err.message }
@@ -69,7 +70,7 @@ export const category = {
     return genres
   },
 
-  associateStyles: async function (comic: number, styles: ITableNameIDPair[]) {
+  associateStyles: async function (comic: number, styles: ITableNameIDPair) {
     if (Object.keys(styles).length > 0) {
       const pool = await PoolConnection.get().connect()
       const sql = `
@@ -78,7 +79,7 @@ export const category = {
       const result = await pool
         .query(sql)
         .then((data: QueryResult<any>) => {
-          return data.rows[0]
+          return { id: comic }
         })
         .catch((err: Error) => {
           return { error: err.message }
@@ -89,7 +90,7 @@ export const category = {
     return styles
   },
 
-  associateTriggers: async function (comic: number, triggers: ITableNameIDPair[]) {
+  associateTriggers: async function (comic: number, triggers: ITableNameIDPair) {
     if (Object.keys(triggers).length > 0) {
       const pool = await PoolConnection.get().connect()
       const sql = `

@@ -1,4 +1,5 @@
 import { ITableNameIDPair } from '../interfaces'
+import { comic } from '../services/comic'
 
 export const buildNestedChildren = function (table: string, id: number = 0) {
   return `WITH RECURSIVE tree AS (
@@ -55,14 +56,27 @@ export const buildNestedChildren = function (table: string, id: number = 0) {
     WHERE lvl = 0;`
 }
 
-export const buildOneToManyRowValues = function (one: number, many: ITableNameIDPair[]) {
-  const list = []
-  for (let i = 0; i < many.length; i++) {
-    list.push(many[i].id)
-  }
+export const buildOneToManyRowValues = function (one: number, many: ITableNameIDPair) {
+  console.log('***********************************************')
+  console.log(many)
+  const list = Object.keys(many)
   const initValue = `(${one}, ${list.shift()})`
   const addRow = function (accumulator: string, currentValue: string) {
     return `${accumulator}, (${one}, ${currentValue})`
   }
   return list.reduce(addRow, initValue)
+}
+
+export const getComicID = async function (query: string) {
+  let comicID = -1
+  if (parseInt(query) > 0) {
+    comicID = parseInt(query)
+  } else {
+    const comicIDQuery = await comic.getComicID(query)
+    if (comicIDQuery.error) {
+      return -1 as number
+    }
+    comicID = comicIDQuery.id
+  }
+  return comicID
 }

@@ -1,13 +1,18 @@
 import React, { useState } from 'react'
 import { Route, Routes, Navigate, Outlet } from 'react-router-dom'
 import Authenticate from './pages/Authenticate'
+import Main from './pages/Main'
 import { Home } from './pages/Home'
 import ManageComics from './pages/ManageComics'
 import NewComic from './pages/NewComic'
-import NotFound from './pages/NotFound'
+import Public from './pages/public'
 import UploadComic from './pages/UploadComic'
 import axios from 'axios'
+import { Button } from '@marissaconner/sousanne-component-library'
 import '@marissaconner/sousanne-component-library/index.css'
+
+const { Read, NotFound } = Public
+
 axios.defaults.withCredentials = true
 axios.defaults.baseURL = 'http://localhost:5000'
 
@@ -69,15 +74,44 @@ function App() {
   return (
     <div className="app">
       <div className="app__header">
-        UNGA GRUNGA BUNGA
+        <span>UNGA BUNGA GRUNGA</span>
+        {auth.loggedIn ?
+          <Button
+            look="muted"
+            onClick = {() => {logOut()}}
+          >
+            Log out
+          </Button>
+          :
+          <Button>
+            Log in
+          </Button>
+        }
       </div>
 
       <div className="app__body">
         <Routes>
           <Route
+            path="/"
+            element={<Main />}
+          />
+          <Route
             path="login"
             element={<Authenticate onLogIn={logIn} />}
           />
+
+          <Route path="comic/:comic">
+            <Route path="read">
+              <Route path ="" element={<Read />} />
+              <Route path =":page" element={<Read />} />
+            </Route>
+            <Route path="about" element={<></>} />
+            <Route path="archive" element={<></>} />
+            <Route path="gallery" element={<></>} />
+            <Route path="cast" element={<></>} />
+            <Route path="blog" element={<></>} />
+            <Route path="store" element={<></>} />
+          </Route>
           { auth.loggedIn ?
             <Route
               path="home"
