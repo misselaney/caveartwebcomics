@@ -99,6 +99,18 @@ export const comicController = {
         res.status(500).send({ error: 'Miscellaneous server error ocurred after uploading the image file.' })
       }
     })
+  },
+
+  getPage: async (req: Request, res: Response) => {
+    let comicID = await getComicID(req.body.comic)
+    if (comicID < 0) {
+      res.status(500).send({ error: `This comic doesn't seem to exist.`})
+    }
+    const queryResult = await comic.getPage(comicID, req.body.page)
+    if (queryResult.error) {
+      res.status(500).send({ error: `There was an issue getting a comic page: ${queryResult.error}`})
+    }
+    res.status(200).send(queryResult)
   }
 }
 
