@@ -49,22 +49,27 @@ function Read() {
   return (
     <div className="comic-page">
       <img className="comic-page__image" src={`/img/${image}`} />
-      <a
-        href={`/comic/${comic}/read/0`}
-      >
-        First
-      </a>
-      <a
-        href={`/comic/${comic}/read/${prevPage}`}
-      >
-        Previous
-      </a>
-      <a
-        href={`/comic/${comic}/read/${nextPage}`}
-      >
-        Next
-      </a>
-      <a>Latest</a>
+
+      <div className="comic-page__navigation">
+        <a
+          className={ prevPage < 0 ? 'Disabled' : '' }
+          href={prevPage > 0 ? `/comic/${comic}/read/0` : '#' }
+        >
+          First
+        </a>
+        <a
+          className={ prevPage < 0 ? 'Disabled' : '' }
+          href={prevPage > 0 ? `/comic/${comic}/read/${prevPage}` : '#' }
+        >
+          Previous
+        </a>
+        <a
+          href={`/comic/${comic}/read/${nextPage}`}
+        >
+          Next
+        </a>
+        <a>Latest</a>
+      </div>
     </div>
   )
 }

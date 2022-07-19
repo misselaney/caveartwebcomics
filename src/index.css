@@ -252,3 +252,16 @@ label.checkbox__label:not([for]) {
 .comic-page__image {
   max-width: 100%;
 }
+.comic-page__navigation {
+  display: flex;
+  justify-content: center;
+}
+.comic-page__navigation a {
+  padding: var(--spacing-md);
+}
+
+.Disabled {
+  pointer-events: none;
+  color: var(--col-disabled);
+  cursor: not-allowed;
+}
