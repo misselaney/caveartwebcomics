@@ -33,6 +33,7 @@ app.use('/api/category', categoryRoutes)
 app.use('/api/comic', comicRoutes)
 
 app.use(Express.static(path.join(__dirname, '/../build')))
+app.use('img', Express.static(path.join(__dirname+'/../public/img')))
 
 app.get('*', function (req: Express.Request, res: Express.Response) {
   console.log(`Catchall route recieved: ${req.path}.`)

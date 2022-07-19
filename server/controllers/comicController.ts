@@ -102,11 +102,11 @@ export const comicController = {
   },
 
   getPage: async (req: Request, res: Response) => {
-    let comicID = await getComicID(req.body.comic)
+    let comicID = await getComicID(req.params.comic)
     if (comicID < 0) {
       res.status(500).send({ error: `This comic doesn't seem to exist.`})
     }
-    const queryResult = await comic.getPage(comicID, req.body.page)
+    const queryResult = await comic.getPage(comicID, parseInt(req.params.page))
     if (queryResult.error) {
       res.status(500).send({ error: `There was an issue getting a comic page: ${queryResult.error}`})
     }

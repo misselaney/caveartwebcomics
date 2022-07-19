@@ -8,6 +8,7 @@
 html, body, #root {
   height: 100%;
   min-height: 100%;
+  background-color: var(--col-background-20);
 }
 
 .app {
@@ -15,7 +16,6 @@ html, body, #root {
   flex: 1 0 auto;
   height: 100%;
   flex-direction: column;
-  background-color: var(--col-background-20);
 }
 
 body {
@@ -247,4 +247,8 @@ label.checkbox__label:not([for]) {
 .comicTiles__thumbnail {
   border: 1px solid var(--col-background-30);
   width: 100%;
+}
+
+.comic-page__image {
+  max-width: 100%;
 }

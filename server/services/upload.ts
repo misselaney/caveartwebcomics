@@ -7,7 +7,7 @@ const extensions = ['.png', '.gif', '.jpg', '.jpeg']
 
 const fileStorage = multer.diskStorage({
   destination: function (req, file, callback) {
-    callback(null, './server/uploads')
+    callback(null, './public/img')
   },
   filename: function (req, file, callback) {
     const fileHash = createHash(createRandom()).substr(1,10)
@@ -28,7 +28,7 @@ export const uploadNewComicPage = multer({
       callback(new Error('Invalid file extension.'))
       return
     }
-    fs.exists(`./uploads/${file.originalname}`, function (exists) {
+    fs.exists(`./img/${file.originalname}`, function (exists) {
       if (exists) {
         callback(new Error('This image already exists.'))
         return
