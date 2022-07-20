@@ -194,6 +194,7 @@ function NewComic() {
       </fieldset>
 
       <Button
+        id="newcomic_submit"
         type='button'
         onClick={() => {submitComic()}}
       >

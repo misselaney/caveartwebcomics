@@ -8,8 +8,8 @@ import NewComic from './pages/NewComic'
 import Public from './pages/public'
 import UploadComic from './pages/UploadComic'
 import axios from 'axios'
-import { Button } from '@marissaconner/sousanne-component-library'
-import '@marissaconner/sousanne-component-library/index.css'
+import { Button, Modal } from '@marissaconner/sousanne-component-library'
+import '@marissaconner/sousanne-component-library/dist/index.css'
 
 const { Read, NotFound } = Public
 
@@ -32,8 +32,9 @@ function App() {
   //       console.error(existingTokens)
   //       console.error(err)
   //     })
-  // }
+  //
 
+  const [loginOpen, setLoginOpen] = useState(false)
   const [auth, setAuth] = useState({
     token: existingTokens,
     loggedIn: Boolean(existingTokens)
@@ -46,6 +47,7 @@ function App() {
       token: localStorage.getItem('tokens'),
       loggedIn: true
     }))
+    closeModal()
   }
 
   const logOut = function () {
@@ -71,25 +73,50 @@ function App() {
   }
   // TODO later: https://www.robinwieruch.de/react-router-private-routes/
 
+  function closeModal () {
+    setLoginOpen(false)
+  }
+
+  function openModal () {
+    setLoginOpen(true)
+    const el = document.querySelector('#global_login') as HTMLElement
+    el.focus()
+  }
+
   return (
     <div className="app">
-      <div className="app__header">
+      <Modal
+        size="md"
+        id="global_login"
+        ariaLabel="Log in"
+        heading="Log In"
+        isOpen={loginOpen}
+        onClose={closeModal}
+      >
+        <Authenticate onLogIn={logIn} />
+      </Modal>
+      
+      <div className={ loginOpen ? 'Blurred app__header' : 'app__header' }>
         <span>UNGA BUNGA GRUNGA</span>
         {auth.loggedIn ?
           <Button
+            id="header-logout"
             look="muted"
             onClick = {() => {logOut()}}
           >
             Log out
           </Button>
           :
-          <Button>
+          <Button
+            id="header-login"
+            onClick = {openModal}
+          >
             Log in
           </Button>
         }
       </div>
 
-      <div className="app__body">
+      <div className={ loginOpen ? 'Blurred app__body' : 'app__body' }>
         <Routes>
           <Route
             path="/"
@@ -137,7 +164,7 @@ function App() {
         </Routes>
       </div>
 
-      <div className="app__footer">
+      <div className={ loginOpen ? 'Blurred app__footer' : 'app__footer' }>
         Footer
       </div>
     </div>

@@ -11,12 +11,13 @@ export const Authenticate = (props: AuthProps) => {
   const validateEmail = function () {
     setEmailError("")
     const regex = /^([\w.%+-]+)@([\w-]+).([\w]{2,})$/i
-    const isValid = email.match(regex) !== null
+    const isValid = !!email.match(regex)
     setValidEmail(isValid)
   }
 
   const validatePassword = function () {
-    const isValid = password.length > 6
+    setPasswordError("")
+    const isValid = password.length > 7
     setValidPassword(isValid)
   }
 
@@ -30,44 +31,75 @@ export const Authenticate = (props: AuthProps) => {
     validatePassword()
   }
 
+  const validateForm = function () {
+    setServerError('')
+    validateEmail()
+    validatePassword()
+    if (!validEmail) {
+      setEmailError('Please enter a valid email address.')
+    }
+    if (!validPassword) {
+      setPasswordError('This password needs to be at least 8 characters long.')
+    }
+    setFormValid(validPassword && validEmail)
+  }
+
   const logIn = function () {
-    axios({
-      method: 'post',
-      url: '/api/user/login',
-      data: { email, password }
-    })
-      .then((res) => {
-        setLoggedIn(true)
-        props.onLogIn(res.data)
+    validateForm()
+    if (formValid) {
+      axios({
+        method: 'post',
+        url: '/api/user/login',
+        data: { email, password }
       })
-      .catch((err) => {
-        console.error(err)
-        setEmailError("That email or password doesn't look right.")
-      })
+        .then((res) => {
+          setEmail("")
+          setPassword("")
+          props.onLogIn(res.data)
+        })
+        .catch((err) => {
+          console.error(err)
+          setServerError(err.response.data)
+        })
+    } else {
+      setPasswordState(validPassword ? 'default' : 'error')
+      setEmailState(validEmail ? 'default' : 'error')
+    }
   }
 
   const signUp = function () {
-    axios({
-      method: 'post',
-      url: '/api/user/new',
-      data: { email, password }
-    })
-      .then((response) => {
-        setConfirmSignup(true)
+    validateForm()
+    if (formValid) {
+      axios({
+        method: 'post',
+        url: '/api/user/new',
+        data: { email, password }
       })
-      .catch((err) => {
-        console.error(err)
-        setEmailError("This email address already exists.")
-      })
+        .then((res) => {
+          setEmail("")
+          setPassword("")
+          props.onLogIn(res.data)
+        })
+        .catch((err) => {
+          console.error(err)
+          setServerError("This email address already exists.")
+        })
+    } else {
+      setPasswordState(validPassword ? 'default' : 'error')
+      setEmailState(validEmail ? 'default' : 'error')
+    }
   }
 
   const [email, setEmail] = useState<string>("")
+  const [emailState, setEmailState] = useState<"default"|"error"|"valid">('default')
+  const [passwordState, setPasswordState] = useState<"default"|"error"|"valid">('default')
   const [password, setPassword] = useState<string>("")
   const [validEmail, setValidEmail] = useState<boolean>(false)
   const [validPassword, setValidPassword] = useState<boolean>(false)
+  const [formValid, setFormValid] = useState<boolean>(false)
+  const [serverError, setServerError] = useState<string>("")
   const [emailError, setEmailError] = useState<string>("")
-  const [loggedIn, setLoggedIn] = useState<boolean>(false)
-  const [confirmSignup, setConfirmSignup] = useState<boolean>(false)
+  const [passwordError, setPasswordError] = useState<string>("")
 
   const emailStatus = function () {
     if (!validEmail) {
@@ -76,43 +108,53 @@ export const Authenticate = (props: AuthProps) => {
     return 'default'
   }
 
+  const passwordStatus = function () {
+    if (!validPassword) {
+      return 'error'
+    }
+    return 'default'
+  }
+
   return (
     <div>
-      { loggedIn ? <Navigate to="/home" /> : '' }
       <form noValidate>
         <fieldset>
-          <legend>Sign Up</legend>
           <TextInput
             placeholderText="email@domain.com"
             labelText="Email"
             id="signup_email"
             onChange={(e) => {onInputEmail(e)}}
-            status={emailStatus()}
+            status={emailState}
             errorText={emailError}
+            type="email"
           />
           <TextInput
+            placeholderText=""
             labelText="Password"
             id="signup_password"
             onChange={(e) => {onInputPassword(e)}}
+            status={passwordState}
+            errorText={passwordError}
+            type="password"
           />
         </fieldset>
-        {
-          !confirmSignup ? 
-            <Button
-              type="button"
-              onClick={signUp}
-            >
-              Sign Up
-            </Button>
-            :
-            <span>You&rsquo;re signed up!</span>
-        }
         <Button
+          id="authenticate_signup"
+          type="button"
+          onClick={signUp}
+          look="muted"
+        >
+          Sign Up
+        </Button>
+        <Button
+          id="authenticate_login"
           type="button"
           onClick={logIn}
+          look="primary"
         >
           Log In
         </Button>
+        { serverError ? <span className="signup_server-message Error">{serverError}</span> : ''}
       </form>
     </div>
   )

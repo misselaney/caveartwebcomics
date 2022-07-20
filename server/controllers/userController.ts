@@ -20,16 +20,18 @@ export const userController = {
     if (loginAttempt.error) {
       res.status(500).send(loginAttempt.error)
     }
-    const userId = loginAttempt.id
-    const sessionHash = createHash(createRandom())
-    auth.updateUserSession(userId, sessionHash)
-    res.cookie('caveartwebcomicssession', sessionHash)
-    res.cookie('caveartwebcomicsuser', userId)
-    const token = {
-      caveartwebcomics: sessionHash,
-      caveartwebcomicsId: userId
+    else {
+      const userId = loginAttempt.id
+      const sessionHash = createHash(createRandom())
+      auth.updateUserSession(userId, sessionHash)
+      res.cookie('caveartwebcomicssession', sessionHash)
+      res.cookie('caveartwebcomicsuser', userId)
+      const token = {
+        caveartwebcomics: sessionHash,
+        caveartwebcomicsId: userId
+      }
+      res.status(200).send(token)
     }
-    res.status(200).send(token)
   },
 
   logout: async function (req: Request, res: Response) {
