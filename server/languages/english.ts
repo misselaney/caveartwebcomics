@@ -9,6 +9,7 @@ const english = {
   getStylesError: 'There was an issue retrieving styles.',
   getAuthorComicsError: 'No comics found by this author.',
   saveToComicError: 'There was an issue saving your image to your comic.',
+  noPermissionToEditComic: 'You can\'t edit this comic.',
   miscImageUploadError: 'Something went wrong after uploading your image.'
 } as ITranslationTable
 

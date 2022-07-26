@@ -4,7 +4,8 @@ import { Navigate } from 'react-router-dom'
 import { Button, TextInput } from '@marissaconner/sousanne-component-library'
 
 interface AuthProps {
-  onLogIn: (data: Record<string, unknown>) => void
+  onLogIn: (data: Record<string, unknown>) => void,
+  mode: 'signup' | 'login'
 }
 
 export const Authenticate = (props: AuthProps) => {
@@ -21,6 +22,12 @@ export const Authenticate = (props: AuthProps) => {
     setValidPassword(isValid)
   }
 
+  const validateName = function () {
+    setNameError("")
+    const isValid = name.length > 0
+    setValidName(isValid)
+  }
+
   const onInputEmail = function (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     setEmail(e.target.value)
     validateEmail()
@@ -31,7 +38,21 @@ export const Authenticate = (props: AuthProps) => {
     validatePassword()
   }
 
-  const validateForm = function () {
+  const onInputName = function (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+    setName(e.target.value)
+    validateName()
+  }
+
+  const validateSignup = function () {
+    validateLogin()
+    validateName()
+    if (!validName) {
+      setNameError('Please enter a valid username.')
+      setFormValid(false)
+    }
+  }
+
+  const validateLogin = function () {
     setServerError('')
     validateEmail()
     validatePassword()
@@ -45,7 +66,7 @@ export const Authenticate = (props: AuthProps) => {
   }
 
   const logIn = function () {
-    validateForm()
+    validateLogin()
     if (formValid) {
       axios({
         method: 'post',
@@ -68,7 +89,7 @@ export const Authenticate = (props: AuthProps) => {
   }
 
   const signUp = function () {
-    validateForm()
+    validateSignup()
     if (formValid) {
       axios({
         method: 'post',
@@ -90,16 +111,20 @@ export const Authenticate = (props: AuthProps) => {
     }
   }
 
+  const [name, setName] = useState<string>("")
   const [email, setEmail] = useState<string>("")
   const [emailState, setEmailState] = useState<"default"|"error"|"valid">('default')
   const [passwordState, setPasswordState] = useState<"default"|"error"|"valid">('default')
+  const [nameState, setNameState] = useState<"default"|"error"|"valid">('default')
   const [password, setPassword] = useState<string>("")
   const [validEmail, setValidEmail] = useState<boolean>(false)
+  const [validName, setValidName] = useState<boolean>(false)
   const [validPassword, setValidPassword] = useState<boolean>(false)
   const [formValid, setFormValid] = useState<boolean>(false)
   const [serverError, setServerError] = useState<string>("")
   const [emailError, setEmailError] = useState<string>("")
   const [passwordError, setPasswordError] = useState<string>("")
+  const [nameError, setNameError] = useState<string>("")
 
   const emailStatus = function () {
     if (!validEmail) {
@@ -119,6 +144,15 @@ export const Authenticate = (props: AuthProps) => {
     <div>
       <form noValidate>
         <fieldset>
+          <TextInput
+            placeholderText="Jimbo"
+            labelText="Username"
+            id="signup_name"
+            onChange={(e) => {onInputName(e)}}
+            status={nameState}
+            errorText={nameError}
+            type="text"
+          />
           <TextInput
             placeholderText="email@domain.com"
             labelText="Email"

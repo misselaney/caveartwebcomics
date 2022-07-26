@@ -133,18 +133,17 @@ export const comic = {
   getPageCount: async function (comic: string) {
     const pool = await PoolConnection.get().connect()
     const sql = `SELECT count(p.id) as pagecount FROM comicpages p JOIN comics c ON c.id=p.comic_id WHERE ${parseInt(comic) > 0 ? 'p.comic_id' : 'c.subdomain' } = $1`
-    console.log(sql)
     const result = await pool
       .query(sql, [comic])
       .then((data: QueryResult<any>) => {
         console.log(data.rows)
-        return data.rows[0].pagecount
+        return parseInt(data.rows[0].pagecount)
       })
       .catch((err: Error) => {
         return { error: err.message }
       })
-      pool.release()
-      return result
+    pool.release()
+    return result
   },
 
   createPage: async function (page: IComicPage) {

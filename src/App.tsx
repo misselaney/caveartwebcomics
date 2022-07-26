@@ -7,11 +7,11 @@ import ManageComics from './pages/ManageComics'
 import NewComic from './pages/NewComic'
 import Public from './pages/public'
 import UploadComic from './pages/UploadComic'
+import CaveartHeader from './components/CaveartHeader'
 import axios from 'axios'
 import { Button, Modal } from '@marissaconner/sousanne-component-library'
 import '@marissaconner/sousanne-component-library/dist/index.css'
-
-const { Read, NotFound } = Public
+const { Read, NotFound, User } = Public
 
 axios.defaults.withCredentials = true
 axios.defaults.baseURL = 'http://localhost:5000'
@@ -19,22 +19,23 @@ axios.defaults.baseURL = 'http://localhost:5000'
 function App() {
   const existingTokens = localStorage.getItem('tokens')
 
-  // const checkAuth = async function () {
-  //   axios({
-  //     method: 'get',
-  //     url: 'http://localhost:5000/api/user/session',
-  //   })
-  //     .then((session) => {
-  //       return true
-  //     })
-  //     .catch((err) => {
-  //       return false
-  //       console.error(existingTokens)
-  //       console.error(err)
-  //     })
-  //
+  const checkAuth = async function () {
+    return axios({
+      method: 'get',
+      url: 'http://localhost:5000/api/user/session',
+    })
+      .then((session) => {
+        return true
+      })
+      .catch((err) => {
+        return false
+        console.error(existingTokens)
+        console.error(err)
+      })
+  }
 
   const [loginOpen, setLoginOpen] = useState(false)
+  
   const [auth, setAuth] = useState({
     token: existingTokens,
     loggedIn: Boolean(existingTokens)
@@ -67,8 +68,8 @@ function App() {
       })
   }
 
-  function PrivateOutlet() {
-    const isAuth = auth.loggedIn;
+  async function PrivateOutlet() {
+    const isAuth = await checkAuth()
     return isAuth ? <Outlet /> : <Navigate to="/login" />;
   }
   // TODO later: https://www.robinwieruch.de/react-router-private-routes/
@@ -93,38 +94,24 @@ function App() {
         isOpen={loginOpen}
         onClose={closeModal}
       >
-        <Authenticate onLogIn={logIn} />
+        <Authenticate
+          onLogIn={logIn}
+          mode='login'
+        />
       </Modal>
-      
-      <div className={ loginOpen ? 'Blurred app__header' : 'app__header' }>
-        <span>UNGA BUNGA GRUNGA</span>
-        {auth.loggedIn ?
-          <Button
-            id="header-logout"
-            look="muted"
-            onClick = {() => {logOut()}}
-          >
-            Log out
-          </Button>
-          :
-          <Button
-            id="header-login"
-            onClick = {openModal}
-          >
-            Log in
-          </Button>
-        }
-      </div>
 
-      <div className={ loginOpen ? 'Blurred app__body' : 'app__body' }>
+      <CaveartHeader
+        auth={auth.loggedIn}
+        logOut={logOut}
+        loginOpen={loginOpen}
+        openModal={openModal}
+      />
+
+      <div className={ loginOpen ? 'Blurred app_body' : 'app_body' }>
         <Routes>
           <Route
             path="/"
             element={<Main />}
-          />
-          <Route
-            path="login"
-            element={<Authenticate onLogIn={logIn} />}
           />
 
           <Route path="comic/:comic">
@@ -139,6 +126,12 @@ function App() {
             <Route path="blog" element={<></>} />
             <Route path="store" element={<></>} />
           </Route>
+
+          <Route
+            path="user/:user"
+            element={<User />}
+          />
+
           { auth.loggedIn ?
             <Route
               path="home"
@@ -148,6 +141,7 @@ function App() {
             :
             ''
           }
+
           { auth.loggedIn ?
             <Route path="manage">
               <Route path="comics" element={<ManageComics />} />
@@ -164,7 +158,7 @@ function App() {
         </Routes>
       </div>
 
-      <div className={ loginOpen ? 'Blurred app__footer' : 'app__footer' }>
+      <div className={ loginOpen ? 'Blurred app_footer' : 'app_footer' }>
         Footer
       </div>
     </div>

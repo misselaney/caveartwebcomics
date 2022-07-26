@@ -31,12 +31,12 @@ function ManageComics() {
         <ul>
           {list.map((comic, idx) => {
             return (
-              <li key={idx} className="comiclist__entry">
+              <li key={idx} className="comiclist_entry">
                 <a href={`${comic.subdomain}`}>
-                  <div className="comiclist__thumbnail">Img</div>
-                  <div className="comiclist__details">
-                    <span className="comiclist__title">{comic.name}</span>
-                    <span className="comiclist__description">{comic.description || 'A webcomic!'}</span>
+                  <div className="comiclist_thumbnail">Img</div>
+                  <div className="comiclist_details">
+                    <span className="comiclist_title">{comic.name}</span>
+                    <span className="comiclist_description">{comic.description || 'A webcomic!'}</span>
                   </div>
                 </a>
               </li>

@@ -16,25 +16,36 @@ const fileStorage = multer.diskStorage({
   }
 })
 
+const imageFilter = function(req, file, callback) {
+  const ext = path.extname(file.originalname);
+  if (!extensions.includes(ext)) {
+    callback(new Error('Invalid file extension.'))
+    return
+  }
+  fs.exists(`./img/${file.originalname}`, function (exists) {
+    if (exists) {
+      callback(new Error('This image already exists.'))
+      return
+    }
+  })
+}
+
 export const uploadNewComicPage = multer({
   storage: fileStorage,
   limits: {
     fieldSize: 1500 * 1024,
     fieldNameSize: 200
   },
-  fileFilter: function(req, file, callback) {
-    const ext = path.extname(file.originalname);
-    if (!extensions.includes(ext)) {
-      callback(new Error('Invalid file extension.'))
-      return
-    }
-    fs.exists(`./img/${file.originalname}`, function (exists) {
-      if (exists) {
-        callback(new Error('This image already exists.'))
-        return
-      }
-    })
-    callback(null, true)
-  }
+  fileFilter: imageFilter
 })
   .single('comicpage')
+
+export const uploadAsset = multer({
+  storage: fileStorage,
+  limits: {
+    fieldSize: 400 * 1024,
+    fieldNameSize: 200
+  },
+  fileFilter: imageFilter
+})
+  .fields([{name: 'avatar', maxCount: 1}, {name: 'banner', maxCount: 1}, {name: 'thumbnail', maxCount: 1},])

@@ -119,10 +119,8 @@ export const comicController = {
       res.status(500).send({ error: `This comic doesn't seem to exist.`})
     }
     const queryResult = await comic.getPageCount(req.params.comic)
-    if (queryResult.error) {
-      res.status(500).send({ error: `There was an issue getting the page count for a comic.`})
-    }
-    res.status(200).send(queryResult)
+    console.log(queryResult)
+    res.status(200).send({ count: queryResult})
   }
 }
 

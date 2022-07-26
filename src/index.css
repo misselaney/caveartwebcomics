@@ -1,5 +1,27 @@
 :root {
   --border-radius: 0px;
+  --color-interface-00: var(--swatch-lime-100);
+  --color-interface-10: var(--swatch-lime-90);
+  --color-interface-20: var(--swatch-lime-80);
+  --color-interface-30: var(--swatch-lime-70);
+  --color-interface-40: var(--swatch-lime-60);
+  --color-interface-50: var(--swatch-lime-50);
+  --color-interface-60: var(--swatch-lime-40);
+  --color-interface-70: var(--swatch-lime-30);
+  --color-interface-80: var(--swatch-lime-20);
+  --color-interface-90: var(--swatch-lime-10);
+  --color-interface-100: var(--swatch-lime-00);
+  --color-primary-00: var(--swatch-lime-100);
+  --color-primary-10: var(--swatch-lime-90);
+  --color-primary-20: var(--swatch-lime-80);
+  --color-primary-30: var(--swatch-lime-70);
+  --color-primary-40: var(--swatch-lime-60);
+  --color-primary-50: var(--swatch-lime-50);
+  --color-primary-60: var(--swatch-lime-40);
+  --color-primary-70: var(--swatch-lime-30);
+  --color-primary-80: var(--swatch-lime-20);
+  --color-primary-90: var(--swatch-lime-10);
+  --color-primary-100: var(--swatch-lime-100);
 }
 
 html, body, #root {
@@ -20,14 +42,14 @@ body {
   flex-direction: column;
 }
 
-.app__body {
+.app_body {
   flex: 1 0 auto;
   width: 100%;
   max-width: 1200px;
   background-color: var(--col-backdrop);
 }
 
-.app__footer {
+.app_footer {
   flex-shrink: 0;
   text-align: center;
   padding: var(--spacing-lg);
@@ -51,20 +73,39 @@ h1, h2, h3, h4, h5, h6 {
   font-family: Tahoma,Verdana,Segoe,sans-serif;
 }
 
-.app__header {
+.app_header {
   background-color: var(--theme-interface-10);
   color: var(--col-text-inverse);
-  padding: var(--spacing-md) var(--spacing-3xl);
+  padding: var(--spacing-md);
+  width: 100%;
   display: flex;
+  justify-content: center;
+}
+
+.app_header-inner {
+  display: flex;
+  width: 100%;
   align-items: center;
   justify-content: space-between;
+  max-width: 1680px;
+  align-content: space-between;
+}
+
+.app_header-masthead {
+  margin-inline-end: var(--spacing-md);
+}
+
+.app_header-login {
+  white-space: nowrap;
+  display: flex;
+  flex-direction: row;
 }
 
 .app {
   flex: 1 0 auto;
 }
 
-.app__body {
+.app_body {
   background-color: var(--col-background);
   color: red;
   max-width: 75rem;
@@ -76,7 +117,7 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: var(--spacing-xs);
 }
 
-.checkbox__control {
+.checkbox_control {
   display: flex;
   height: 0;
   margin: 0;
@@ -95,8 +136,8 @@ legend {
   font-weight: 700;
 }
 
-.checkbox__control + label::before,
-.checkbox__control + label::after {
+.checkbox_control + label::before,
+.checkbox_control + label::after {
   border: 2px solid transparent;
   border-radius: var(--border-radius);
   content: '';
@@ -105,18 +146,18 @@ legend {
   position: absolute;
 }
 
-.checkbox__control + label::before {
+.checkbox_control + label::before {
   border: 2px solid var(--col-interactive-01-border);
   width: var(--spacing-md);
   height: var(--spacing-md);
 }
 
-.checkbox__control + label::after {
+.checkbox_control + label::after {
   width: 0;
   transform: rotate(-50deg);
 }
 
-.checkbox__control:checked + label::after {
+.checkbox_control:checked + label::after {
   border-color: var(--col-interactive-01-label);
   border-top: 2px solid transparent;
   border-right: 2px solid transparent;
@@ -127,23 +168,23 @@ legend {
   transition: all 0.125s ease-out;
 }
 
-.checkbox__control:checked + label::before {
+.checkbox_control:checked + label::before {
   background-color: var(--col-interactive);
   border-color: var(--col-interactive);
 }
 
-.checkbox__control:disabled + label {
+.checkbox_control:disabled + label {
   cursor: not-allowed;
 }
 
-.checkbox__control:disabled + label::before {
+.checkbox_control:disabled + label::before {
   border-color:  var(--col-disabled);
 }
-.checkbox__control:disabled:checked + label::before {
+.checkbox_control:disabled:checked + label::before {
   background-color: var(--col-disabled);
 }
 
-.checkbox__label {
+.checkbox_label {
   font-weight: 400;
   position: relative;
   cursor: pointer;
@@ -153,14 +194,14 @@ legend {
   align-items: center;
 }
 
-.checkbox__label:active,
-.checkbox__label:focus {
+.checkbox_label:active,
+.checkbox_label:focus {
   border: none;
   outline: none;
   box-shadow: none;
 }
 
-.checkbox__helptext {
+.checkbox_helptext {
   color: var(--col-text-ancillary);
   margin-inline-start: var(--spacing-md);
   padding-left: var(--spacing-sm);
@@ -174,7 +215,7 @@ input[id=undefined] + label::before {
   border-color: red !important;
 }
 
-label.checkbox__label:not([for]) {
+label.checkbox_label:not([for]) {
   color: red !important;
 }
 
@@ -193,7 +234,7 @@ label.checkbox__label:not([for]) {
   transition: all 0.5s ease-out;
 }
 
-.comiclist__entry {
+.comiclist_entry {
   padding: var(--spacing-md);
   list-style: none;
   display: flex;
@@ -202,17 +243,17 @@ label.checkbox__label:not([for]) {
   border-radius: var(--border-radius);
 }
 
-.comiclist__details {
+.comiclist_details {
   padding:  var(--spacing-sm);
   display: flex;
   flex-direction: column;
 }
 
-.comiclist__title {
+.comiclist_title {
   font-weight: 700;
 }
 
-.comiclist__description {
+.comiclist_description {
   color: var(--col-text-ancillary);
   display: block;
   overflow: hidden;
@@ -223,7 +264,7 @@ label.checkbox__label:not([for]) {
   display: -webkit-box;
 }
 
-.upload__preview {
+.upload_preview {
   width: 25%;
 }
 
@@ -235,19 +276,19 @@ label.checkbox__label:not([for]) {
   width: 8rem;
 }
 
-.comicTiles__thumbnail {
+.comicTiles_thumbnail {
   border: 1px solid var(--col-background-30);
   width: 100%;
 }
 
-.comic-page__image {
+.comic-page_image {
   max-width: 100%;
 }
-.comic-page__navigation {
+.comic-page_navigation {
   display: flex;
   justify-content: center;
 }
-.comic-page__navigation a {
+.comic-page_navigation a {
   padding: var(--spacing-md);
 }
 
