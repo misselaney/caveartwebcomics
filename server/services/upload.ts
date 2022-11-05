@@ -1,22 +1,26 @@
-import multer from 'multer'
+import { Request } from 'express'
+import multer, { FileFilterCallback } from 'multer'
 import { createHash, createRandom } from '../utils/hash'
 import path from 'path'
 import fs from 'fs'
 
 const extensions = ['.png', '.gif', '.jpg', '.jpeg']
 
+type DestinationCallback = (error: Error | null, destination: string) => void
+type FileNameCallback = (error: Error | null, filename: string) => void
+
 const fileStorage = multer.diskStorage({
-  destination: function (req, file, callback) {
+  destination: function (req: Request, file: Express.Multer.File, callback: DestinationCallback) {
     callback(null, './public/img')
   },
-  filename: function (req, file, callback) {
+  filename: function (req: Request, file: Express.Multer.File, callback: FileNameCallback) {
     const fileHash = createHash(createRandom()).substr(1,10)
     const fileName = `${file.fieldname}_${fileHash}_${Date.now()}${path.extname(file.originalname)}`
     callback(null, fileName)
   }
 })
 
-const imageFilter = function(req, file, callback) {
+const imageFilter = function(req: Request, file: Express.Multer.File, callback: FileFilterCallback) {
   const ext = path.extname(file.originalname);
   if (!extensions.includes(ext)) {
     callback(new Error('Invalid file extension.'))

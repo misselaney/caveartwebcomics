@@ -7,11 +7,11 @@ import ManageComics from './pages/ManageComics'
 import NewComic from './pages/NewComic'
 import Public from './pages/public'
 import UploadComic from './pages/UploadComic'
-import CaveartHeader from './components/CaveartHeader'
+// import CaveartHeader from './components/CaveartHeader'
 import axios from 'axios'
 import { Button, Modal } from '@marissaconner/sousanne-component-library'
 import '@marissaconner/sousanne-component-library/dist/index.css'
-const { Read, NotFound, User } = Public
+const { Read, NotFound } = Public
 
 axios.defaults.withCredentials = true
 axios.defaults.baseURL = 'http://localhost:5000'
@@ -100,12 +100,12 @@ function App() {
         />
       </Modal>
 
-      <CaveartHeader
+      {/* <CaveartHeader
         auth={auth.loggedIn}
         logOut={logOut}
         loginOpen={loginOpen}
         openModal={openModal}
-      />
+      />*/}
 
       <div className={ loginOpen ? 'Blurred app_body' : 'app_body' }>
         <Routes>
@@ -127,10 +127,10 @@ function App() {
             <Route path="store" element={<></>} />
           </Route>
 
-          <Route
+          {/*<Route
             path="user/:user"
             element={<User />}
-          />
+          />*/}
 
           { auth.loggedIn ?
             <Route
