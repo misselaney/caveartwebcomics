@@ -108,6 +108,10 @@
   },
   "exclude": [
     "node_modules",
-    "build"
+    "build",
+    "**/*.stories.tsx",
+    "**/*.test.tsx",
+    "dist",
+    "stories"
   ]
 }

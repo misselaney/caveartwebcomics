@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import Icon from '../../component-library/Icon'
 import axios from 'axios'
-import { Icon } from '@marissaconner/sousanne-component-library/dist'
 
 function Read() {
 

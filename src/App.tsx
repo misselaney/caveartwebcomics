@@ -8,8 +8,6 @@ import Public from './pages/public'
 import UploadComic from './pages/UploadComic'
 // import CaveartHeader from './components/CaveartHeader'
 import axios from 'axios'
-import { Button, Modal } from '@marissaconner/sousanne-component-library'
-import '@marissaconner/sousanne-component-library/dist/index.css'
 const { Read, NotFound, TermsOfService, Authenticate } = Public
 
 axios.defaults.withCredentials = true
@@ -85,7 +83,7 @@ function App() {
 
   return (
     <div className="app">
-      <Modal
+      {/*      <Modal
         size="md"
         id="global_login"
         ariaLabel="Log in"
@@ -97,7 +95,7 @@ function App() {
           onLogIn={logIn}
           mode='login'
         />
-      </Modal>
+      </Modal>*/}
 
       {/* <CaveartHeader
         auth={auth.loggedIn}

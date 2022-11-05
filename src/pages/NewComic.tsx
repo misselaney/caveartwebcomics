@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import ComicTag from '../components/ComicTag'
-import { Button, TextInput } from '@marissaconner/sousanne-component-library'
 import axios from 'axios'
 
 interface Genre {
@@ -135,16 +134,13 @@ function NewComic() {
   return (
     <div>
       <h1>Create A Comic</h1>
-      <TextInput
-        labelText="Comic name"
+      <input
         id="comic_name"
         onChange={(e) => {onNameChange(e)}}
       />
 
-      <TextInput
-        labelText="Comic Subdomain"
+      <input
         id="comic_subdomain"
-        helperText="Your comic will (eventually) be accessible at example.caveart.net"
         onChange={(e) => {onSubdomainChange(e)}}
       />
 
@@ -193,13 +189,13 @@ function NewComic() {
         })}
       </fieldset>
 
-      <Button
+      <button
         id="newcomic_submit"
         type='button'
         onClick={() => {submitComic()}}
       >
         Create
-      </Button>
+      </button>
       { submissionError ? <span>There was an issue submitting your new comic.</span> : '' }
     </div>
   )
