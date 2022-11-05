@@ -1,0 +1,7 @@
+.buttonskeleton {
+  text-decoration: none;
+  box-sizing: border-box;
+  display: flex;
+  width: var(--spacing-3xl);
+  height:  var(--spacing-xl);
+}

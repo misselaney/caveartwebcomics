@@ -1,0 +1,65 @@
+.form-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-field_label {
+  font-size: var(--size-font-sm);
+  font-weight: 700;
+  margin-inline-end: var(--spacing-sm);
+  margin-bottom: var(--spacing-xs);
+  letter-spacing: 0.5px
+}
+
+.form-field.Disabled {
+  pointer-events: none;
+}
+
+.form-field.Disabled .form-field_label,
+.form-field.Disabled .form-field_control,
+.form-field.Disabled .form-field_helpertext {
+  color: var(--col-disabled);
+}
+
+.form-field.Error .form-field_helpertext {
+  color: var(--col-error);
+}
+
+.form-field_control {
+  width: 100%;
+  display: block;
+  background-color: var(--col-background);
+  border: none;
+  color:  var(--col-text);
+  padding: var(--spacing-sm);
+  font-size: var(--size-font-md);
+  border-radius: var(--spacing-xs);
+  outline: 1px solid var(--col-border);
+}
+
+.form-field_control:focus {
+  background-color: var(--col-background);
+  outline: 3px solid var(--col-interactive-01);
+}
+
+.form-field_control::placeholder {
+  color: var(--col-text-secondary)
+}
+
+.form-field_control.Error {
+  outline: 1px solid var(--col-error);
+  background:  var(--col-background);
+}
+.form-field.Disabled .form-field_control.Valid {
+  outline-color: var(--col-border);
+}
+.form-field_control.Valid {
+  outline: 1px solid var(--col-success);
+}
+
+
+.form-field_helpertext {
+  color: var(--col-text-secondary);
+  font-size: var(--size-font-sm);
+  letter-spacing: 0.5px;
+}

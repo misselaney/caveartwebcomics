@@ -1,0 +1,6 @@
+.icon {
+  fill: var(--col-interactive-01)
+}
+.icon.Disabled {
+  fill: var(--col-disabled);
+}

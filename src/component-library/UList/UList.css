@@ -1,0 +1,14 @@
+.unordered-list li {
+  list-style-type: none;
+  background-color: var(--col-background);
+  padding: var(--spacing-sm);
+  border-bottom: 1px solid var(--col-border);
+}
+
+.unordered-list li:last-of-type {
+  border-bottom: none;
+}
+
+.unordered-list li:hover {
+  background-color: var(--theme-interface-10);
+}
