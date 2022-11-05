@@ -11,7 +11,7 @@ import UploadComic from './pages/UploadComic'
 import axios from 'axios'
 import { Button, Modal } from '@marissaconner/sousanne-component-library'
 import '@marissaconner/sousanne-component-library/dist/index.css'
-const { Read, NotFound } = Public
+const { Read, NotFound, TermsOfService } = Public
 
 axios.defaults.withCredentials = true
 axios.defaults.baseURL = 'http://localhost:5000'
@@ -125,6 +125,11 @@ function App() {
             <Route path="cast" element={<></>} />
             <Route path="blog" element={<></>} />
             <Route path="store" element={<></>} />
+          </Route>
+
+          <Route
+            path="policy">
+            <Route path="tos" element ={<TermsOfService />} />
           </Route>
 
           {/*<Route
