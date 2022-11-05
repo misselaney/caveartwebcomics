@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import Icon from '../../component-library/Icon'
+import Select from '../../component-library/Form/Select'
 import axios from 'axios'
 
 function Read() {
@@ -86,7 +87,7 @@ function Read() {
           />
         </a>
 
-        Page Selector Here
+        <Select options={[]} />
 
         <a
           className= { isLastPage ? 'Disabled' : ''}
