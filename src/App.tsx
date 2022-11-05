@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Route, Routes, Navigate, Outlet } from 'react-router-dom'
-import Authenticate from './pages/Authenticate'
 import Main from './pages/Main'
 import { Home } from './pages/Home'
 import ManageComics from './pages/ManageComics'
@@ -11,7 +10,7 @@ import UploadComic from './pages/UploadComic'
 import axios from 'axios'
 import { Button, Modal } from '@marissaconner/sousanne-component-library'
 import '@marissaconner/sousanne-component-library/dist/index.css'
-const { Read, NotFound, TermsOfService } = Public
+const { Read, NotFound, TermsOfService, Authenticate } = Public
 
 axios.defaults.withCredentials = true
 axios.defaults.baseURL = 'http://localhost:5000'
