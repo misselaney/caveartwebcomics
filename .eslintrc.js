@@ -24,6 +24,6 @@ module.exports = {
   "rules": {
     "space-in-parens": ["error", "never"],
     "indent": ["error", 2],
-    "no-multi-spaces": ["error"]
+    "no-multi-spaces": ["error"],
   }
 }

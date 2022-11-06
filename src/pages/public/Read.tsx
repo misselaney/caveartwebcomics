@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import Icon from '../../component-library/Icon'
-import Select from '../../component-library/Form/Select'
+import ComicPageSelect from '../../component-library/Form/Select'
 import axios from 'axios'
 
 function Read() {
 
   const [image, setImage] = useState<string>('')
   const [lastPage, setLastPage] = useState<number>(0)
+  const [comicPages, setComicPages] = useState<{value: string, label: string}[]>([])
   const [isLastPage, setIsLastPage] = useState<boolean>(false)
   const { comic } = useParams()
   const { page } = useParams()
@@ -38,8 +39,14 @@ function Read() {
     })
       .then((res) => {
         if (typeof res.data?.count === 'number') {
-          console.log(res)
+          console.log("go thru pages")
           setLastPage(res.data.count)
+          const newPages = [] as {value: string, label: string}[]
+          for (let i = 1; i <= res.data.count; i++) {
+            newPages.push({ value: (i).toString(), label: `Page ${i}` });
+          }
+          setComicPages(newPages)
+          console.log(comicPages)
           setIsLastPage(nextPage > res.data.count)
         }
       })
@@ -87,7 +94,11 @@ function Read() {
           />
         </a>
 
-        <Select options={[]} />
+        <ComicPageSelect
+          id="comic-dropdown"
+          current={currPage}
+          options={comicPages}
+        />
 
         <a
           className= { isLastPage ? 'Disabled' : ''}

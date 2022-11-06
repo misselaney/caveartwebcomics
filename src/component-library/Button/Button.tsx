@@ -35,21 +35,29 @@ export interface ButtonProps {
   type?: 'button' | 'reset' | 'submit'
 }
 
+
 const Button = ({
   id,
   look,
   children,
   classes = '',
   disabled,
-  onClick = () => {},
+  onClick,
   role,
   tabIndex,
   type,
   ...props}: ButtonProps) => {
-  return(
+
+  const _onClick = function(e: React.MouseEvent) {
+    if (onClick) {
+      onClick(e)
+    }
+  }
+
+  return (
     <button
       disabled={disabled}
-      onClick={(e) => {onClick(e)}}
+      onClick={(e) => {_onClick(e)}}
       className={`button ${classes} ${classNames({
         'Disabled': !!disabled,
         'Muted': look === 'muted',

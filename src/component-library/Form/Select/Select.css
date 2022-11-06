@@ -71,7 +71,7 @@
     background-color: var(--col-backgorund);
   }
 
-  .dropdown-menu_itemlist button,
+  .dropdown-menu_item,
   .dropdown-menu_itemlist a {
     font-family: var(--font-typeface-text);
     font-size: var(--font-size-sm);
@@ -95,55 +95,49 @@
     text-decoration: none;
   }
 
-  .dropdown-menu_itemlist button:focus,
-  .dropdown-menu_itemlist button:hover,
-  .dropdown-menu_itemlist button:active {
+  .dropdown-menu_item:focus,
+  .dropdown-menu_item:hover,
+  .dropdown-menu_item:active {
     transition: 0.25s ease-in background-color,
                 0.25s ease-in color;
     background-color: var(--col-shade-1);
     outline: none;
   }
 
-  .dropdown-menu_itemlist button.Warning {
+  .dropdown-menu_item.Warning {
     transition: 0.25s ease-in-out background-color,
                 0.25s ease-in-out color;
     color: var(--col-accent-dark);
   }
 
-  .dropdown-menu_itemlist button.Warning:hover,
-  .dropdown-menu_itemlist button.Warning:focus {
+  .dropdown-menu_item.Warning:hover,
+  .dropdown-menu_item.Warning:focus {
     transition: 0.25s ease-in-out background-color,
                 0.25s ease-in-out color;
     color: var(--col-background);
     background-color: var(--col-accent-dark);
   }
 
-   .dropdown-menu_itemlist button:disabled {
+   .dropdown-menu_item:disabled {
     transition: 0.25s ease-in-out background-color,
                 0.25s ease-in-out color;
     color: var(--col-disabled);
   }
 
-  .dropdown-menu_itemlist button:disabled {
+  .dropdown-menu_item:disabled {
     transition: 0.25s ease-in-out background-color,
                 0.25s ease-in-out color;
     color: var(--col-disabled);
   }
 
-  .dropdown-menu_itemlist button:disabled,
-  .dropdown-menu_itemlist button:disabled:hover,
-  .dropdown-menu_itemlist button:disabled:focus {
+  .dropdown-menu_item:disabled,
+  .dropdown-menu_item:disabled:hover,
+  .dropdown-menu_item:disabled:focus {
     transition: 0.25s ease-in-out background-color,
                 0.25s ease-in-out color;
     background-color: var(--col-background);
     cursor: not-allowed;
     color: var(--col-disabled);
-  }
-
-  .dropdown-menu_itemlist :not(button) {
-    color: var(--col-text-inverse);
-    text-decoration: line-through;
-    background-color: var(--col-error-70);
   }
 
   .dropdown-menu_panel.Opened {
@@ -169,37 +163,37 @@
                 0.25s ease-in-out height;
   }
 
-  .dropdown-menu_itemlist button.Warning:hover,
-  .dropdown-menu_itemlist button.Warning:focus {
+  .dropdown-menu_itemlist.Warning:hover,
+  .dropdown-menu_itemlist.Warning:focus {
     transition: 0.25s ease-in-out background-color,
                 0.25s ease-in-out color;
     color: var(--col-text-inverse);
     background-color: var(--col-error-70);
   }
 
-  .dropdown-menu_itemlist button.Warning {
+  .dropdown-menu_itemlist.Warning {
     transition: 0.25s ease-in-out background-color,
                 0.25s ease-in-out color;
     color: var(--col-error-70);
   }
 
-  .dropdown-menu_itemlist button.Primary:hover,
-  .dropdown-menu_itemlist button.Primary:focus {
+  .dropdown-menu_item.Primary:hover,
+  .dropdown-menu_item.Primary:focus {
     transition: 0.25s ease-in-out background-color,
                 0.25s ease-in-out color;
     color: var(--col-text-inverse);
     background-color: var(--col-interactive-01);
   }
 
-  .dropdown-menu_itemlist button.Primary {
+  .dropdown-menu_item.Primary {
     transition: 0.25s ease-in-out background-color,
                 0.25s ease-in-out color;
     color: var(--col-interactive-01);
   }
 
-  .dropdown-menu_itemlist button:focus,
-  .dropdown-menu_itemlist button:hover,
-  .dropdown-menu_itemlist button:active {
+  .dropdown-menu_item:focus,
+  .dropdown-menu_item:hover,
+  .dropdown-menu_item:active {
     color: var(--col-interactive-01);
     transition: 0.25s ease-in background-color,
                 0.25s ease-in color;

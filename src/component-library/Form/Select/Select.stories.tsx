@@ -1,10 +1,10 @@
 import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
-import DropdownSelect from './Select'
+import ComicPageSelect from './Select'
 
 export default {
   title: 'Forms/Select',
-  component: DropdownSelect,
+  component: ComicPageSelect,
   argTypes: {
     defaultValue: {
       control: { type: 'text' }
@@ -13,9 +13,9 @@ export default {
       control: { type: 'select' }
     }
   }
-} as ComponentMeta<typeof DropdownSelect>
+} as ComponentMeta<typeof ComicPageSelect>
 
-const Template: ComponentStory<typeof DropdownSelect> = (args) => <DropdownSelect {...args} />
+const Template: ComponentStory<typeof ComicPageSelect> = (args) => <ComicPageSelect {...args} />
 
 export const Default = Template.bind({})
 Default.args = {

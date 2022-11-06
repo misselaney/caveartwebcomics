@@ -88,9 +88,9 @@ const Modal = ({
   id,
   isOpen,
   isWarning,
-  onAction = () => {},
-  onClose = () => {},
-  onKeyDown = () => {},
+  onAction,
+  onClose,
+  onKeyDown,
   persistent,
   size,
   scrolls,
@@ -111,9 +111,27 @@ const Modal = ({
     }
   }
 
+  const _onClose = function () {
+    if (onClose) {
+      onClose()
+    }
+  }
+
+  const _onClick = function () {
+    if (onAction) {
+      onAction()
+    }
+  }
+
+  const _onKeyDown = function (e: React.KeyboardEvent) {
+    if (onKeyDown) {
+      onKeyDown(e)
+    }
+  }
+
   const checkEscape = function (e: React.KeyboardEvent) {
     if (e.code === 'Escape') {
-      if (!persistent) {
+      if (!persistent && !!onClose) {
         onClose()
       }
     }
@@ -123,7 +141,7 @@ const Modal = ({
     const clickedNode = e.target as HTMLElement
     const classList = clickedNode.classList.value.split(' ')
     if (classList.includes('modal')) { // then we are clicking outside of the content
-      if (!persistent) {
+      if (!persistent && !!onClose) {
         onClose()
       }
     }
@@ -148,7 +166,7 @@ const Modal = ({
         id={id}
         onClick={(e) => {checkClickOut(e)}}
         onKeyUp={(e) => {checkEscape(e)}}
-        onKeyDown={(e) => {onKeyDown(e)}}
+        onKeyDown={(e) => {_onKeyDown(e)}}
         role={isAlert ? 'alertdialog' : 'dialog' }
         tabIndex={-1}
         open={isOpen}
@@ -164,7 +182,7 @@ const Modal = ({
             <button
               type="button"
               className="modal_close"
-              onClick={() => {onClose()}}
+              onClick={_onClose}
               aria-label={closeButtonLabel}
             >
               <Icon id={`${id}-close-icon`} width="24" height="24" name="close" />
@@ -191,7 +209,7 @@ const Modal = ({
                     <Button
                       id={`${id}-action`}
                       type="button"
-                      onClick={() => {onAction()}}
+                      onClick={_onClick}
                       look="primary"
                     >
                       {actionButtonLabel}

@@ -6,6 +6,7 @@ import ManageComics from './pages/ManageComics'
 import NewComic from './pages/NewComic'
 import Public from './pages/public'
 import UploadComic from './pages/UploadComic'
+import Modal from './component-library/Modal'
 // import CaveartHeader from './components/CaveartHeader'
 import axios from 'axios'
 const { Read, NotFound, TermsOfService, Authenticate } = Public
@@ -83,7 +84,7 @@ function App() {
 
   return (
     <div className="app">
-      {/*      <Modal
+      <Modal
         size="md"
         id="global_login"
         ariaLabel="Log in"
@@ -95,7 +96,7 @@ function App() {
           onLogIn={logIn}
           mode='login'
         />
-      </Modal>*/}
+      </Modal>
 
       {/* <CaveartHeader
         auth={auth.loggedIn}
