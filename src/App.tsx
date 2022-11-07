@@ -7,7 +7,7 @@ import NewComic from './pages/NewComic'
 import Public from './pages/public'
 import UploadComic from './pages/UploadComic'
 import Modal from './component-library/Modal'
-// import CaveartHeader from './components/CaveartHeader'
+import SiteHeader from './component-library/Navigation'
 import axios from 'axios'
 const { Read, NotFound, TermsOfService, Authenticate } = Public
 
@@ -94,16 +94,15 @@ function App() {
       >
         <Authenticate
           onLogIn={logIn}
-          mode='login'
+          initMode='login'
         />
       </Modal>
 
-      {/* <CaveartHeader
-        auth={auth.loggedIn}
-        logOut={logOut}
-        loginOpen={loginOpen}
-        openModal={openModal}
-      />*/}
+      <SiteHeader
+        loggedIn={auth.loggedIn}
+        onSignup={openModal}
+        onLogout={logOut}
+      />
 
       <div className={ loginOpen ? 'Blurred app_body' : 'app_body' }>
         <Routes>

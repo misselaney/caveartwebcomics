@@ -1,17 +1,20 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { Navigate } from 'react-router-dom'
+import TextInput from '../../component-library/Form/TextInput'
+import Button from '../../component-library/Button'
+import Link from '../../component-library/Link'
 
 interface AuthProps {
   onLogIn: (data: Record<string, unknown>) => void,
-  mode: 'signup' | 'login'
+  initMode: 'signup' | 'login'
 }
 
 export const Authenticate = (props: AuthProps) => {
   const validateEmail = function () {
     setEmailError("")
     const regex = /^([\w.%+-]+)@([\w-]+).([\w]{2,})$/i
-    const isValid = !!email.match(regex)
+    const isValid = !!email.match(regex) && email.length > 0
     setValidEmail(isValid)
   }
 
@@ -52,6 +55,7 @@ export const Authenticate = (props: AuthProps) => {
   }
 
   const validateLogin = function () {
+    console.log("Validate")
     setServerError('')
     validateEmail()
     validatePassword()
@@ -61,12 +65,15 @@ export const Authenticate = (props: AuthProps) => {
     if (!validPassword) {
       setPasswordError('This password needs to be at least 8 characters long.')
     }
+    console.log("Valid")
     setFormValid(validPassword && validEmail)
   }
 
   const logIn = function () {
+    console.log("LogIn")
     validateLogin()
     if (formValid) {
+      console.log("Axios")
       axios({
         method: 'post',
         url: '/api/user/login',
@@ -76,10 +83,12 @@ export const Authenticate = (props: AuthProps) => {
           setEmail("")
           setPassword("")
           props.onLogIn(res.data)
+          console.log("RES")
         })
         .catch((err) => {
           console.error(err)
           setServerError(err.response.data)
+          console.log("ERR")
         })
     } else {
       setPasswordState(validPassword ? 'default' : 'error')
@@ -124,6 +133,7 @@ export const Authenticate = (props: AuthProps) => {
   const [emailError, setEmailError] = useState<string>("")
   const [passwordError, setPasswordError] = useState<string>("")
   const [nameError, setNameError] = useState<string>("")
+  const [mode, setMode] = useState<string>(props.initMode)
 
   const emailStatus = function () {
     if (!validEmail) {
@@ -143,36 +153,48 @@ export const Authenticate = (props: AuthProps) => {
     <div>
       <form noValidate>
         <fieldset>
-          <input
-            id="signup_name"
-            onChange={(e) => {onInputName(e)}}
-            type="text"
-          />
-          <input
+          {mode === 'signup' ? 
+            (<TextInput
+              labelText="Username"
+              id="signup_name"
+              onChange={(e) => {onInputName(e)}}
+              type="text"
+              placeholderText="Captain Caveman"
+            />)
+            : "" 
+          }
+          <TextInput
+            labelText="Email"
             id="signup_email"
             onChange={(e) => {onInputEmail(e)}}
+            placeholderText="unga@bunga.com"
             type="email"
+            errorText={emailError}
           />
-          <input
+          <TextInput
+            labelText="Password"
+            helperText={mode == 'signup' ? "Pick a strong password!" : ""}
+            errorText={passwordError}
             id="signup_password"
             onChange={(e) => {onInputPassword(e)}}
             type="password"
           />
         </fieldset>
-        <button
+        <Button
           id="authenticate_signup"
           type="button"
-          onClick={signUp}
+          onClick={mode === 'signup' ? signUp : logIn}
+          look="primary"
         >
-          Sign Up
-        </button>
-        <button
-          id="authenticate_login"
+          {mode === 'signup' ? 'Sign Up' : 'Log In'}
+        </Button>
+        <Button
+          id="authenticate_switch-mode"
           type="button"
-          onClick={logIn}
+          look="muted"
         >
-          Log In
-        </button>
+          {mode === 'login' ? 'Sign Up' : 'Log In'}
+        </Button>
         { serverError ? <span className="signup_server-message Error">{serverError}</span> : ''}
       </form>
     </div>

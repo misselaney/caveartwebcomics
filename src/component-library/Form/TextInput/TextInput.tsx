@@ -28,11 +28,7 @@ export interface TextInputProps {
   /**
    * Provide an onChange handler
   */
-  onChange?: (...params: any) => any
-  /**
-   * Provide an onClick handler
-  */
-  onClick?: (...params: any) => any
+  onChange: (...params: any) => any
   /**
   * Specify a placeholder value.
   */
@@ -59,8 +55,7 @@ const TextInput = ({
   errorText = 'Please review your input.',
   helperText,
   labelText = 'Label',
-  onChange = () => {},
-  onClick = () => {},
+  onChange,
   placeholderText = 'Placeholder',
   type,
   status,
@@ -87,9 +82,6 @@ const TextInput = ({
         disabled={disabled}
         onChange={(e) => {
           onChange(e)
-        }}
-        onClick={(e) => {
-          onClick(e)
         }}
         placeholder={placeholderText}
         className={`form-field_control ${classes} ${classNames({

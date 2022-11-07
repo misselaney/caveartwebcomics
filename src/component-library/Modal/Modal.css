@@ -56,8 +56,6 @@
 .modal_body {
   padding: var(--spacing-md);
   background-color: var(--col-background);
-  max-height: 75vh;
-  overflow-y: scroll;
 }
 
 .modal_footer {
