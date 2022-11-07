@@ -71,3 +71,12 @@ create table comics_readers (
     dropped_at TIMESTAMP DEFAULT null,
     UNIQUE (user_id, comic_id)
 )
+create table comics_comments (
+    id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(id),
+    comic_id INT REFERENCES comics(id),
+    created_at TIMESTAMP default NOW(),
+    parent_id INT REFERENCES comics_comments(id),
+    approved BOOLEAN DEFAULT TRUE,
+    content TEXT
+)
