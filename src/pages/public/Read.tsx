@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import Icon from '../../component-library/Icon'
 import ComicPageSelect from '../../component-library/Form/Select'
+import Comment from '../../component-library/Comment/Comment'
 import axios from 'axios'
 
 function Read() {
@@ -129,6 +130,8 @@ function Read() {
           />
         </a>
       </div>
+
+      <Comment id="bla"/>
     </div>
   )
 }
