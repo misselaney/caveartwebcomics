@@ -9,7 +9,9 @@ import UploadComic from './pages/UploadComic'
 import Modal from './component-library/Modal'
 import SiteHeader from './component-library/Navigation'
 import axios from 'axios'
-const { Read, NotFound, TermsOfService, Authenticate } = Public
+const { Read, NotFound, TermsOfService } = Public
+import AuthenticateModal from './components/authentication/AuthenticateModal'
+import Link from './component-library/Link'
 
 axios.defaults.withCredentials = true
 axios.defaults.baseURL = 'http://localhost:5000'
@@ -32,8 +34,9 @@ function App() {
       })
   }
 
-  const [loginOpen, setLoginOpen] = useState(false)
-  
+  const [authModalOpen, setAuthModalOpen] = useState(false)
+  const [authMode, setAuthMode] = useState<'Sign Up' | 'Log In' | ''>('')
+
   const [auth, setAuth] = useState({
     token: existingTokens,
     loggedIn: Boolean(existingTokens)
@@ -73,38 +76,33 @@ function App() {
   // TODO later: https://www.robinwieruch.de/react-router-private-routes/
 
   function closeModal () {
-    setLoginOpen(false)
+    setAuthModalOpen(false)
   }
 
-  function openModal () {
-    setLoginOpen(true)
-    const el = document.querySelector('#global_login') as HTMLElement
+  function openAuth (mode: 'Log In' | 'Sign Up') {
+    setAuthModalOpen(true)
+    setAuthMode(mode)
+    const el = document.querySelector('#authmodal_sign-up') as HTMLElement
     el.focus()
   }
 
   return (
     <div className="app">
-      <Modal
-        size="md"
-        id="global_login"
-        ariaLabel="Log in"
-        heading="Log In"
-        isOpen={loginOpen}
+      <AuthenticateModal
+        isOpen={authModalOpen}
         onClose={closeModal}
-      >
-        <Authenticate
-          onLogIn={logIn}
-          initMode='login'
-        />
-      </Modal>
+        onAuth={logIn}
+        initial={authMode}
+      />
 
       <SiteHeader
         loggedIn={auth.loggedIn}
-        onSignup={openModal}
+        onSignup={() => {openAuth('Sign Up')}}
+        onLogIn={()=> {openAuth('Log In')}}
         onLogout={logOut}
       />
 
-      <div className={ loginOpen ? 'Blurred app_body' : 'app_body' }>
+      <div className={ authModalOpen ? 'Blurred app_body' : 'app_body' }>
         <Routes>
           <Route
             path="/"
@@ -160,8 +158,8 @@ function App() {
         </Routes>
       </div>
 
-      <div className={ loginOpen ? 'Blurred app_footer' : 'app_footer' }>
-        Footer
+      <div className={ authModalOpen ? 'Blurred app_footer' : 'app_footer' }>
+        <Link id="footer_tos" href="/policy/tos">Terms of Service</Link>
       </div>
     </div>
   )

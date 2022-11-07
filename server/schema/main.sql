@@ -78,5 +78,6 @@ create table comics_comments (
     created_at TIMESTAMP default NOW(),
     parent_id INT REFERENCES comics_comments(id),
     approved BOOLEAN DEFAULT TRUE,
-    content TEXT
+    content TEXT,
+    ip_address TEXT,
 )

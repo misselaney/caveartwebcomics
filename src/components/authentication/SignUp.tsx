@@ -3,9 +3,12 @@ import axios from 'axios'
 import { Navigate } from 'react-router-dom'
 import TextInput from '../../component-library/Form/TextInput'
 import Button from '../../component-library/Button'
-import Link from '../../component-library/Link'
 
-export const Authenticate = (props: AuthProps) => {
+interface AuthProps {
+  onSignup: (data: Record<string, unknown>) => void,
+}
+
+export const Signup = (props: AuthProps) => {
   const validateEmail = function () {
     setEmailError("")
     const regex = /^([\w.%+-]+)@([\w-]+).([\w]{2,})$/i
@@ -40,71 +43,53 @@ export const Authenticate = (props: AuthProps) => {
     validateName()
   }
 
-  const validateSignup = function () {
-    validateLogin()
-    validateName()
-    if (!validName) {
-      setNameError('Please enter a valid username.')
-      setFormValid(false)
-    }
+  const cleanSlate = function () {
+    setServerError('')
+    setEmailError('')
+    setPasswordError('')
+    setNameError('')
+    setEmailState('default')
+    setPasswordState('default')
+    setNameState('default')
   }
 
-  const validateLogin = function () {
-    setServerError('')
+  const validateSignup = function () {
+    cleanSlate()
+    validateName()
     validateEmail()
     validatePassword()
+    if (!validName) {
+      setNameError('Please enter a valid username.')
+      setNameState('error')
+    }
     if (!validEmail) {
       setEmailError('Please enter a valid email address.')
+      setEmailState('error')
     }
     if (!validPassword) {
       setPasswordError('This password needs to be at least 8 characters long.')
-    }
-    setFormValid(validPassword && validEmail)
-  }
-
-  const logIn = function () {
-    validateLogin()
-    if (formValid) {
-      axios({
-        method: 'post',
-        url: '/api/user/login',
-        data: { email, password }
-      })
-        .then((res) => {
-          setEmail("")
-          setPassword("")
-          props.onLogIn(res.data)
-        })
-        .catch((err) => {
-          console.error(err)
-          setServerError(err.response.data)
-        })
-    } else {
-      setPasswordState(validPassword ? 'default' : 'error')
-      setEmailState(validEmail ? 'default' : 'error')
+      setPasswordState('error')
     }
   }
 
   const signUp = function () {
     validateSignup()
-    if (formValid) {
+    if (validName && validEmail && validPassword) {
       axios({
         method: 'post',
         url: '/api/user/new',
-        data: { email, password }
+        data: { name, email, password }
       })
         .then((res) => {
+          setName("")
           setEmail("")
           setPassword("")
-          props.onLogIn(res.data)
+          props.onSignup(res.data)
         })
         .catch((err) => {
           console.error(err)
           setServerError("This email address already exists.")
         })
-    } else {
-      setPasswordState(validPassword ? 'default' : 'error')
-      setEmailState(validEmail ? 'default' : 'error')
     }
   }
 
@@ -117,26 +102,10 @@ export const Authenticate = (props: AuthProps) => {
   const [validEmail, setValidEmail] = useState<boolean>(false)
   const [validName, setValidName] = useState<boolean>(false)
   const [validPassword, setValidPassword] = useState<boolean>(false)
-  const [formValid, setFormValid] = useState<boolean>(false)
   const [serverError, setServerError] = useState<string>("")
   const [emailError, setEmailError] = useState<string>("")
   const [passwordError, setPasswordError] = useState<string>("")
   const [nameError, setNameError] = useState<string>("")
-  const [mode, setMode] = useState<string>(props.initMode)
-
-  const emailStatus = function () {
-    if (!validEmail) {
-      return 'error'
-    }
-    return 'default'
-  }
-
-  const passwordStatus = function () {
-    if (!validPassword) {
-      return 'error'
-    }
-    return 'default'
-  }
 
   return (
     <div>
@@ -146,21 +115,25 @@ export const Authenticate = (props: AuthProps) => {
             labelText="Username"
             id="signup_name"
             onChange={(e) => {onInputName(e)}}
+            status={nameState}
             type="text"
             placeholderText="Captain Caveman"
+            errorText={nameError}
           />
           <TextInput
             labelText="Email"
             id="signup_email"
             onChange={(e) => {onInputEmail(e)}}
+            status={emailState}
             placeholderText="unga@bunga.com"
             type="email"
-            errorText="Please use a valid email."
+            errorText={emailError}
           />
           <TextInput
             labelText="Password"
-            helperText="Pick a strong password!"
-            errorText="Password must be 8 characters or less."
+            helperText="Pick a password with at least 8 characters!"
+            errorText={passwordError}
+            status={passwordState}
             id="signup_password"
             onChange={(e) => {onInputPassword(e)}}
             type="password"
@@ -174,18 +147,10 @@ export const Authenticate = (props: AuthProps) => {
         >
           Sign Up
         </Button>
-        <Button
-          id="authenticate_switch-mode"
-          type="button"
-          onClick={logIn}
-          look="muted"
-        >
-          Log In
-        </Button>
         { serverError ? <span className="signup_server-message Error">{serverError}</span> : ''}
       </form>
     </div>
   )
 }
 
-export default Authenticate;
+export default Signup;
