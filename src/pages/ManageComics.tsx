@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import Link from '../component-library/Link'
 
 interface Comic {
   id: number,
@@ -55,9 +56,9 @@ function ManageComics() {
   return (
     <>
       {renderComicList(comics)}
-      <a href='new'>
+      <Link id="create_comic" href='new'>
         Create A Comic
-      </a>
+      </Link>
     </>
   )
 }

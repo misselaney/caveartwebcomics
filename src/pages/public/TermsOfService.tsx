@@ -1,9 +1,10 @@
 import React from 'react'
 
 function TermsOfService() {
-
+  
   return (
     <div>
+      {testString}
       <p>
         These Terms of Service (&ldquo;Terms&rdquo;) govern your access to and use of our services and any information, text, links, graphics, photos, audio, videos, or other materials or arrangements of materials uploaded, downloaded or appearing on the Caveart website and its subdomains and affiliated websites (collectively referred to as &ldquo;Content&rdquo;). By using the Services you agree to be bound by these Terms.
       </p>
