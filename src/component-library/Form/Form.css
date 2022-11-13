@@ -5,6 +5,7 @@
 }
 
 .form-field_label {
+  font-family: var(--font-stack-display);
   font-size: var(--size-font-sm);
   font-weight: 700;
   margin-inline-end: var(--spacing-sm);

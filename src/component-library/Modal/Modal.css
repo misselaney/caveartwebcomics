@@ -53,6 +53,10 @@
   background-color: var(--col-background);
 }
 
+.modal_title {
+  font-family: var(--font-stack-display);
+}
+
 .modal_body {
   padding: var(--spacing-md);
   background-color: var(--col-background);

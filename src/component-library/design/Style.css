@@ -54,10 +54,10 @@
   --swatch-lime-20: #abf3a7;
   --swatch-lime-10: #e1fbe0;
 
-
-
-  --swatch-white: #fff;
+  --swatch-white: #fefefe;
   --swatch-black: #050505;
+
+  --grid-maxwidth: 1200px;
 
   --base-size: 1.16rem;
   --base-scaler: 1.6;
@@ -83,20 +83,25 @@
 
   --size-border-radius: var(--border-radius, var(--spacing-xs));
 
-  --theme-interface-00: var(--color-interface-00, var(--swatch-black));
-  --theme-interface-10: var(--color-interface-10, var(--swatch-ochre-100));
-  --theme-interface-20: var(--color-interface-20, var(--swatch-ochre-90));
-  --theme-interface-30: var(--color-interface-30, var(--swatch-ochre-80));
-  --theme-interface-40: var(--color-interface-40, var(--swatch-ochre-70));
-  --theme-interface-50: var(--color-interface-50, var(--swatch-ochre-60));
-  --theme-interface-60: var(--color-interface-60, var(--swatch-ochre-50));
-  --theme-interface-70: var(--color-interface-70, var(--swatch-ochre-40));
-  --theme-interface-80: var(--color-interface-80, var(--swatch-ochre-30));
-  --theme-interface-90: var(--color-interface-90, var(--swatch-ochre-20));
-  --theme-interface-100: var(--color-interface-100, var(--swatch-ochre-10));
+  --font-stack-display: Lacquer, Tahoma,Verdana,Segoe,sans-serif;
+  --font-stack-body: Tahoma,Verdana,Segoe,sans-serif;
+
+  --borer-radius:  var(--spacing-sm);
+
+  --theme-interface-00: var(--color-interface-00, var(--swatch-ochre-100));
+  --theme-interface-10: var(--color-interface-10, var(--swatch-ochre-90));
+  --theme-interface-20: var(--color-interface-20, var(--swatch-ochre-80));
+  --theme-interface-30: var(--color-interface-30, var(--swatch-ochre-70));
+  --theme-interface-40: var(--color-interface-40, var(--swatch-ochre-60));
+  --theme-interface-50: var(--color-interface-50, var(--swatch-ochre-50));
+  --theme-interface-60: var(--color-interface-60, var(--swatch-ochre-40));
+  --theme-interface-70: var(--color-interface-70, var(--swatch-ochre-30));
+  --theme-interface-80: var(--color-interface-80, var(--swatch-ochre-20));
+  --theme-interface-90: var(--color-interface-90, var(--swatch-ochre-10));
+  --theme-interface-100: var(--color-interface-100, var(--swatch-white));
 
   --theme-primary-00: var(--color-primary-00, var(--swatch-white));
-  --theme-primary-10: var(--color-primary-10, var(--swatch-ochre-100));
+  --theme-primary-10: var(--color-primary-10, var(--swatch-ochre-10));
   --theme-primary-20: var(--color-primary-20, var(--swatch-ochre-90));
   --theme-primary-30: var(--color-primary-30, var(--swatch-ochre-80));
   --theme-primary-40: var(--color-primary-40, var(--swatch-ochre-70));
@@ -105,7 +110,7 @@
   --theme-primary-70: var(--color-primary-70, var(--swatch-ochre-40));
   --theme-primary-80: var(--color-primary-80, var(--swatch-ochre-30));
   --theme-primary-90: var(--color-primary-90, var(--swatch-ochre-20));
-  --theme-primary-100: var(--color-primary-100, var(--swatch-ochre-10));
+  --theme-primary-100: var(--color-primary-100, var(--swatch-ochre-100));
 
   --theme-secondary-00: var(--color-secondary-00, var(--swatch-white));
   --theme-secondary-10: var(--color-secondary-10, var(--swatch-gray-100));
@@ -191,12 +196,12 @@ p {
 div, p, span, a, rt, rp, dfn, abbr, q, cite, em, time, var,
 samp, i, b, sub, sup, small, strong, mark, ruby, ins, del,
 bdi, bdo, s, kbd, wbr {
-  font-family: Tahoma,Verdana,Segoe,sans-serif; 
+  font-family: var(--font-stack-body);
   font-size: var(--base-size);
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: Tahoma,Verdana,Segoe,sans-serif;
+  font-family: var(--font-stack-display);
 }
 
 /* width */

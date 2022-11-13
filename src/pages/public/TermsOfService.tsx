@@ -1,10 +1,9 @@
 import React from 'react'
 
 function TermsOfService() {
-  
+
   return (
     <div>
-      {testString}
       <p>
         These Terms of Service (&ldquo;Terms&rdquo;) govern your access to and use of our services and any information, text, links, graphics, photos, audio, videos, or other materials or arrangements of materials uploaded, downloaded or appearing on the Caveart website and its subdomains and affiliated websites (collectively referred to as &ldquo;Content&rdquo;). By using the Services you agree to be bound by these Terms.
       </p>
@@ -56,20 +55,48 @@ function TermsOfService() {
 
       <h2>Forum, Comments And Messaging</h2>
       <p>
-        Users have channels by which to communicate with one another. Comments become harassment the moment they are described as unwelcome and yet persist.  When another user makes it clear that communication should stop, stop.  Continuing to contact that person in any way will be considered harassment and grounds for removal from the platform. 
+        Users have channels by which to communicate with one another. Comments become harassment the moment they are described as unwelcome and yet persist.  When another user makes it clear that communication should stop, stop.  Continuing to contact that person in any way will be considered harassment and grounds for removal from the platform.  Any behavior that is typically illegal regardless of where you live will be considered grounds for removal.  This includes but is not limited to the following smash hits: 
+        <ul>
+          <li>Making a credible threat (as in what a police officer would deem a credible threat)</li>
+          <li>Making repeated or harrassing contact with an individual</li>
+          <li>Impersonation of another individual in order to mar their reputation</li>
+        </ul>
       </p>
 
+      <h2>Caveart may remove you for certain off-site behaviors</h2>
+
       <p>
-        Behavior and situations on other platforms such as Discord or social media is typically not relevant to Caveart.  There are two exceptions.
+        We desire to build an online community and we expect its members to adhere to our values. Therefore we do, in fact, take into account off-platform behavior in the ways described below.
+      </p>
+      <ul>
+        <li>
+          <strong>Revealing personally identifying information:</strong>  If you share personally identifying information (PII) that you obtained through Caveart (for example, a naive user PMs you and tells you where they go to school) then we will ban you regardless of where, why, or how you share that information in order to no longer enable you.  Don&rsquo;t dox people. 
+        </li>
+        <li>
+          <strong>Stalking:</strong> If a user draws a boundary with you (blocks you, tells you to stop talking to them) and you use another service to ignore that boundary, then we consider that stalking.  Even though you contacted them through another service, we will remove you. We do not want to provide our service to people who are incapable or unwilling to respect boundaries. 
+        </li>
+        <li>
+          <strong>Hate-crime denial and discrimination:</strong> We do not tolerate our users engaging in the denial or mockery of hate crimes (e.g. holocaust denial), or disparagement based on a particular characteristic (race, gender, ability, immigration status, etc).  If we find you doing this off-site, we can and will in fact remove you from our site because we do not want to provide service to individuals who engage in this behavior.
+        </li>
+        <li>
+          <strong>Incitement to harrassment and violence:</strong> As we do not tolerate incitement of harrassment or violence, we will remove you for off-platform statements that encourage, instruct, or otherwise enable others to antagonize other individuals.  Please note that there is a difference between incitement and merely saying nasty things said about people.  We have no obligation to take action about hot takes that others find upsetting until or unless they actually incite harrassment or violence or otherwise break our rules (like doxxing them).
+        </li>
+      </ul>
+      <p>
+       
       </p>
       <p>
-        If you share personally identifying information (PII) that you obtained through Caveart (for example, a naive user PMs you and tells you where they go to school) then we will ban you regardless of where, why, or how you share that information.  Don&rsquo;t dox people. 
+        
       </p>
       <p>
-        If a user draws a boundary with you (blocks you, tells you to stop talking to them) and you use another service to ignore that boundary, then even though you contacted them through another service, we will still treat it as if it happened on Caveart.  Boundaries are boundaries. Respect them or leave.
+      
       </p>
       <p>
-        When removing users based on their behavior on other platforms, we will do our best to vet that these accounts correspond to the right people.
+        
+      </p>
+      
+      <p>
+        When removing users based on their behavior on other platforms, we will do our best to vet that these accounts correspond to the right people before taking decisive action.  We reserve the right to pre-emptively instate a temporary suspension of an account while we investigate a particular matter in order to potentially contain it.  That suspension will be lifted if we cannot be reasonably certain that an off-site account corresponds to a particular user. 
       </p>
 
       <h1>Your Rights</h1>

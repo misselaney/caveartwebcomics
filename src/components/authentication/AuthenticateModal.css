@@ -1,0 +1,7 @@
+.authmodal_confirmation {
+  text-align: center;
+}
+
+.authmodal_confirmation img {
+    padding-bottom: var(--spacing-lg);
+}

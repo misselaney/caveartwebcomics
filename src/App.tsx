@@ -49,7 +49,6 @@ function App() {
       token: localStorage.getItem('tokens'),
       loggedIn: true
     }))
-    closeModal()
   }
 
   const logOut = function () {
@@ -92,6 +91,7 @@ function App() {
         isOpen={authModalOpen}
         onClose={closeModal}
         onAuth={logIn}
+        loggedIn={auth.loggedIn}
         initial={authMode}
       />
 

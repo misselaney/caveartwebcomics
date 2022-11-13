@@ -11,6 +11,8 @@
               0.25s ease-in-out color,
               0.25s ease-in-out box-shadow;
   width: 100%;
+  font-family: var(--font-stack-display);
+  border-radius:  var(--size-border-radius);
 }
 
 .button:hover {
