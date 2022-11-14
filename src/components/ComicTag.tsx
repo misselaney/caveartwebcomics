@@ -33,14 +33,14 @@ export const ComicTag = (props: ComicTagProps) => {
             <input
               tab-index="0"
               type="checkbox"
-              className="checkbox__control"
+              className="checkbox_control"
               id={`option-${identifier}`}
               value={option.id}
               checked={!!selection[option.id]}
               onChange={() => toggleOption({ id: option.id, name: option.name })}
             >
             </input>
-            <label className="checkbox__label" htmlFor={`option-${identifier}`}>
+            <label className="checkbox_label" htmlFor={`option-${identifier}`}>
               {option.name}
             </label>
             <div className={selection[option.id] ? 'indent expanded' : 'indent collapsed'}>

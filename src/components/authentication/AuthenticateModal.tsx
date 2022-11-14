@@ -29,39 +29,47 @@ export const Authenticate = ({ isOpen, initial, onClose, onAuth, loggedIn, ...pr
         isOpen={isOpen}
         onClose={onClose}
       >
-        { loggedIn ? 
-          <div className="authmodal_confirmation">
-            <img src="/public/img/brand/confirmationscrungus.jpg" alt="You have successfully authenticated."/>
-            <Button look="primary" id="continue" onClick={onClose}>
-              Into the cave!
-            </Button>
-          </div>
-          :
+
+        { isOpen ? 
           <>
-            {authMode === 'Log In' ?
-              <>
-                <Login onLogIn={onAuth} />
-                <Button
-                  id="authmodal_sign-up"
-                  look="muted"
-                  onClick={() => {setAuthMode('Sign Up')}}
-                >
-                  Sign Up
+            { loggedIn ? 
+              <div className="authmodal_confirmation">
+                <img src="/public/img/brand/confirmationscrungus.png" alt="You have successfully authenticated."/>
+                <p>You have successfully {authMode === 'Log In' ? 'logged in' : 'signed up'}!</p>
+                <Button look="primary" id="continue" onClick={onClose}>
+                  Into the cave!
                 </Button>
-              </>
+              </div>
               :
               <>
-                <Signup onSignup={onAuth} />
-                <Button
-                  id="authmodal_sign-up"
-                  look="muted"
-                  onClick={() => {setAuthMode('Log In')}}
-                >
-                  Log In
-                </Button>
+                {authMode === 'Log In' ?
+                  <>
+                    <Login onLogIn={onAuth} />
+                    <Button
+                      id="authmodal_sign-up"
+                      look="muted"
+                      onClick={() => {setAuthMode('Sign Up')}}
+                    >
+                      Sign Up
+                    </Button>
+                  </>
+                  :
+                  <>
+                    <Signup onSignup={onAuth} />
+                    <Button
+                      id="authmodal_sign-up"
+                      look="muted"
+                      onClick={() => {setAuthMode('Log In')}}
+                    >
+                      Log In
+                    </Button>
+                  </>
+                }
               </>
             }
           </>
+          :
+          ""
         }
       </Modal>
     </>

@@ -1,0 +1,24 @@
+.thumbnail {
+  width: var(--grid-8);
+  margin-bottom: var(--spacing-sm);
+  margin-inline-end:  var(--spacing-sm);
+  outline: 1px solid red;
+  cursor: pointer;
+}
+
+.thumbnail_image {
+  border-radius: var(--border-radius);
+}
+
+.thumbnail_overlay {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--border-radius);
+  box-shadow: inset 0 0 0 1px rgb(6 6 22 / 10%);
+}
+
+.thumbnail_overlay.Hover {
+  background-color: rgba(38,38,54,.5);
+}

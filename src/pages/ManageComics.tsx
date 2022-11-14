@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Link from '../component-library/Link'
+import Thumbnail from '../component-library/Comics/Thumbnail'
 
 interface Comic {
   id: number,
@@ -34,6 +35,7 @@ function ManageComics() {
             return (
               <li key={idx} className="comiclist_entry">
                 <a href={`${comic.subdomain}`}>
+                  <Thumbnail />
                   <div className="comiclist_thumbnail">Img</div>
                   <div className="comiclist_details">
                     <span className="comiclist_title">{comic.name}</span>

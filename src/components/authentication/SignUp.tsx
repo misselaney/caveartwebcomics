@@ -22,6 +22,11 @@ export const Signup = (props: AuthProps) => {
     setValidPassword(isValid)
   }
 
+  const validatePasswordVerification = function () {
+    const isValid = password === passwordVerification
+    setValidPasswordVerification(isValid)
+  }
+
   const validateName = function () {
     setNameError("")
     const isValid = name.length > 0
@@ -38,6 +43,11 @@ export const Signup = (props: AuthProps) => {
     validatePassword()
   }
 
+  const onInputPasswordVerification = function (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+    setPasswordVerification(e.target.value)
+    validatePasswordVerification()
+  }
+
   const onInputName = function (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     setName(e.target.value)
     validateName()
@@ -51,6 +61,7 @@ export const Signup = (props: AuthProps) => {
     setEmailState('default')
     setPasswordState('default')
     setNameState('default')
+    setPasswordVerificationState('default')
   }
 
   const validateSignup = function () {
@@ -58,6 +69,7 @@ export const Signup = (props: AuthProps) => {
     validateName()
     validateEmail()
     validatePassword()
+    validatePasswordVerification()
     if (!validName) {
       setNameError('Please enter a valid username.')
       setNameState('error')
@@ -70,11 +82,14 @@ export const Signup = (props: AuthProps) => {
       setPasswordError('This password needs to be at least 8 characters long.')
       setPasswordState('error')
     }
+    if (!validPasswordVerification) {
+      setPasswordVerificationState('error')
+    }
   }
 
   const signUp = function () {
     validateSignup()
-    if (validName && validEmail && validPassword) {
+    if (validName && validEmail && validPassword && validPasswordVerification) {
       axios({
         method: 'post',
         url: '/api/user/new',
@@ -95,17 +110,24 @@ export const Signup = (props: AuthProps) => {
 
   const [name, setName] = useState<string>("")
   const [email, setEmail] = useState<string>("")
+  const [password, setPassword] = useState<string>("")
+  const [passwordVerification, setPasswordVerification] = useState<string>("")
+
   const [emailState, setEmailState] = useState<"default"|"error"|"valid">('default')
   const [passwordState, setPasswordState] = useState<"default"|"error"|"valid">('default')
   const [nameState, setNameState] = useState<"default"|"error"|"valid">('default')
-  const [password, setPassword] = useState<string>("")
-  const [validEmail, setValidEmail] = useState<boolean>(false)
+  const [passwordVerificationState, setPasswordVerificationState] = useState<"default"|"error"|"valid">('default')
+  
   const [validName, setValidName] = useState<boolean>(false)
+  const [validEmail, setValidEmail] = useState<boolean>(false)
   const [validPassword, setValidPassword] = useState<boolean>(false)
-  const [serverError, setServerError] = useState<string>("")
+  const [validPasswordVerification, setValidPasswordVerification] = useState<boolean>(false)
+
+  const [nameError, setNameError] = useState<string>("")
   const [emailError, setEmailError] = useState<string>("")
   const [passwordError, setPasswordError] = useState<string>("")
-  const [nameError, setNameError] = useState<string>("")
+  const [serverError, setServerError] = useState<string>("")
+  
 
   return (
     <div>
@@ -132,10 +154,20 @@ export const Signup = (props: AuthProps) => {
           <TextInput
             labelText="Password"
             helperText="Pick a password with at least 8 characters!"
+            placeholderText=""
             errorText={passwordError}
             status={passwordState}
             id="signup_password"
             onChange={(e) => {onInputPassword(e)}}
+            type="password"
+          />
+          <TextInput
+            labelText="Verify Password"
+            errorText="Passwords must match."
+            placeholderText=""
+            status={passwordVerificationState}
+            id="signup_password_verification"
+            onChange={(e) => {onInputPasswordVerification(e)}}
             type="password"
           />
         </fieldset>
