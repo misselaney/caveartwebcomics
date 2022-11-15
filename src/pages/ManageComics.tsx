@@ -28,20 +28,19 @@ function ManageComics() {
 
   const renderComicList = function(list: Comic[]) {
     if (list.length > 0) {
-      console.log(list)
       return (
         <ul>
           {list.map((comic, idx) => {
             return (
               <li key={idx} className="comiclist_entry">
-                <a href={`${comic.subdomain}`}>
-                  <Thumbnail />
-                  <div className="comiclist_thumbnail">Img</div>
-                  <div className="comiclist_details">
-                    <span className="comiclist_title">{comic.name}</span>
-                    <span className="comiclist_description">{comic.description || 'A webcomic!'}</span>
-                  </div>
-                </a>
+                <Thumbnail />
+                <div className="comiclist_details">
+                  <span className="comiclist_title">{comic.name}</span>
+                  <span className="comiclist_description">{comic.description || 'A webcomic!'}</span>
+                  <Link id={`comiclist_link_add_${idx}`} href={`/manage/upload/${comic.subdomain}`}>Add page</Link>
+                  <Link id={`comiclist_link_edit_${idx}`} href="#">Edit</Link>
+                  <Link id={`comiclist_link_read__${idx}`} href={`/comic/${comic.subdomain}/read`}>Read</Link>
+                </div>
               </li>
             )}
           )}

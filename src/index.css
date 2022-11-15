@@ -205,8 +205,11 @@ label.checkbox_label:not([for]) {
   list-style: none;
   display: flex;
   flex-direction: row;
-  border: 2px solid var(--col-interactive-01-border);
   border-radius: var(--border-radius);
+}
+
+.comiclist_entry:hover {
+  background-color: var(--theme-interface-10);
 }
 
 .comiclist_details {

@@ -20,10 +20,10 @@ const SiteHeader = ({
   return (
     <div className="horizontal-nav">
       <div className="horizontal-nav_inner">
-        <div className="horizontal-nav_brand">
+        <a href="/" className="horizontal-nav_brand">
           <img alt="Cave Art!" src='/public/img/brand/headerlogo.png' width='200' />
           <span className="horizontal-nav_tagline">Comics that rock!</span>
-        </div>
+        </a>
         { loggedIn ? 
           <>
             <Link id="horizontal-nav_manage" href="/manage/comics">My Webcomics</Link>
