@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import Login from './Login'
-import Signup from './Signup'
+import Login from './LogIn'
+import Signup from './SignUp'
 import Button from '../../component-library/Button'
 import Modal from '../../component-library/Modal'
 import './AuthenticateModal.css'
@@ -34,7 +34,7 @@ export const Authenticate = ({ isOpen, initial, onClose, onAuth, loggedIn, ...pr
           <>
             { loggedIn ? 
               <div className="authmodal_confirmation">
-                <img src="/public/img/brand/confirmationscrungus.png" alt="You have successfully authenticated."/>
+                <img src="/public/img/brand/confirmation.gif" alt="You have successfully authenticated."/>
                 <p>You have successfully {authMode === 'Log In' ? 'logged in' : 'signed up'}!</p>
                 <Button look="primary" id="continue" onClick={onClose}>
                   Into the cave!

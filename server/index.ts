@@ -6,6 +6,7 @@ import cors from 'cors'
 import userRoutes from './routes/user'
 import categoryRoutes from './routes/category'
 import comicRoutes from './routes/comic'
+import multer from 'multer'
 
 const port = process.env.PORT || 5000
 const router = Express.Router()
@@ -13,6 +14,7 @@ const router = Express.Router()
 let app: Express.Application | undefined = undefined
 app = Express()
 app.use(bodyParser.json())
+
 app.use(Express.urlencoded({extended: true}))
 app.use(cookieParser)
 app.use((req: Express.Request, res: Express.Response, next: Express.NextFunction) => {

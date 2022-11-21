@@ -22,7 +22,6 @@ const SiteHeader = ({
       <div className="horizontal-nav_inner">
         <a href="/" className="horizontal-nav_brand">
           <img alt="Cave Art!" src='/public/img/brand/headerlogo.png' width='200' />
-          <span className="horizontal-nav_tagline">Comics that rock!</span>
         </a>
         { loggedIn ? 
           <>
